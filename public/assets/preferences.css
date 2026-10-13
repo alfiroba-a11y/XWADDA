@@ -1,0 +1,57 @@
+body[data-theme="light"]{background:#f3f3f3!important;color:#111!important;color-scheme:light}
+body[data-theme="dark"]{color-scheme:dark}
+body[data-theme="light"] .site-header{background:#fff!important;border-bottom:1px solid #bbb!important;color:#111}
+body[data-theme="light"] .site-header nav{color:#222}body[data-theme="light"] .site-brand{color:#111}
+body[data-theme="light"] .site-brand img{background:#fff;border:1px solid #222}
+body[data-theme="light"] .hero-copy h1,body[data-theme="light"] .how-section h2,body[data-theme="light"] .feature-section h2,body[data-theme="light"] .payments-section h2,body[data-theme="light"] .faq-section h2,body[data-theme="light"] .landing-callout h2{color:#090909}
+body[data-theme="light"] .hero-copy h1 span{background:linear-gradient(90deg,#111,#333);background-clip:text}
+body[data-theme="light"] .hero-copy>p,body[data-theme="light"] .section-head>p,body[data-theme="light"] .landing-callout p,body[data-theme="light"] .payments-section p,body[data-theme="light"] .payments-section li,body[data-theme="light"] .feature-grid p,body[data-theme="light"] .faq-section details p{color:#333}
+body[data-theme="light"] .hero-trust,body[data-theme="light"] .eyebrow{color:#444}
+body[data-theme="light"] .orbit-card,body[data-theme="light"] .how-grid article,body[data-theme="light"] .feature-grid article,body[data-theme="light"] .payment-card,body[data-theme="light"] .proof-strip,body[data-theme="light"] .landing-callout{background:#fff!important;color:#111;border-color:#888!important;box-shadow:0 12px 35px #0001}
+body[data-theme="light"] .orbit-card h3,body[data-theme="light"] .feature-grid b,body[data-theme="light"] .payment-card b{color:#111}
+body[data-theme="light"] .orbit-card>p,body[data-theme="light"] .orbit-note small,body[data-theme="light"] .how-grid p,body[data-theme="light"] .proof-strip span,body[data-theme="light"] .payment-card p{color:#444}
+body[data-theme="light"] .orbit-note{background:#f2f2f2;border-color:#aaa}body[data-theme="light"] .float-code,body[data-theme="light"] .float-lock{background:#fff;color:#111;border-color:#777}
+body[data-theme="light"] .faq-section details{color:#111;border-color:#aaa}body[data-theme="light"] .landing-footnote{color:#333}
+body[data-theme="light"] .site-footer,body[data-theme="light"] .site-copyright{color:#444!important;background:#f3f3f3!important;border-color:#aaa!important}
+body[data-theme="light"] .auth-card,body[data-theme="light"] .page-body .row,body[data-theme="light"] .simple-page{background:#fff!important;color:#111;border-color:#888!important;box-shadow:0 15px 45px #0002}
+body[data-theme="light"] .auth-card h1,body[data-theme="light"] .auth-card label,body[data-theme="light"] .simple-page h1,body[data-theme="light"] .simple-page h2{color:#111}
+body[data-theme="light"] .auth-card>p,body[data-theme="light"] .auth-switch,body[data-theme="light"] .auth-form small{color:#444!important}
+body[data-theme="light"] .auth-form input,body[data-theme="light"] .page-body input,body[data-theme="light"] .page-body textarea,body[data-theme="light"] .page-body select{background:#fff!important;color:#111!important;border-color:#777!important}
+body[data-theme="light"] .page-body .notice{background:#f1f1f1!important;color:#111!important;border-color:#555!important}
+body[data-theme="light"] .proof-strip>div{border-color:#bbb}body[data-theme="light"] .landing-footer a{color:#222}
+.site-controls{display:flex;align-items:center;gap:8px;margin-left:12px}
+.site-controls button,.site-controls select{padding:8px 10px;border:1px solid #777;border-radius:7px;background:#111;color:#fff;font-size:11px}
+.site-controls button{cursor:pointer}.site-controls select{max-width:115px}
+body[data-theme="light"] .site-controls button,body[data-theme="light"] .site-controls select{background:#fff;color:#111;border-color:#777}
+body[data-theme="dark"] .site-controls button,body[data-theme="dark"] .site-controls select{background:#111;color:#fff}
+html[dir="rtl"] body{direction:rtl}html[dir="rtl"] .site-header nav,html[dir="rtl"] .site-controls{direction:rtl}
+html[dir="rtl"] .landing-footnote{border-left:0;border-right:2px solid var(--cyan);padding-left:0;padding-right:15px}
+.room-preview-rows{display:grid;gap:7px;margin-top:16px}.room-preview-rows>div{padding:10px;background:#222;border-radius:7px}.room-preview-rows b,.room-preview-rows small{display:block}.room-preview-rows b{font-size:11px}.room-preview-rows small{margin-top:4px;color:#bbb;font-size:10px}
+body[data-theme="light"] .room-preview-rows>div{background:#f1f1f1}body[data-theme="light"] .room-preview-rows small{color:#444}
+@media(max-width:760px){.site-header{flex-wrap:wrap;height:auto;min-height:66px;padding-top:9px;padding-bottom:9px}.site-header nav{gap:10px}.site-controls{margin-left:4px}.site-controls button,.site-controls select{padding:7px 8px;font-size:10px}}
+@media(max-width:480px){.site-header nav a[href="#how"],.site-header nav a[href="#features"],.site-header nav a[href="#payments"]{display:none}.site-header nav{gap:7px}.site-controls select{max-width:86px}}
+
+.site-controls{flex-shrink:0}
+body[data-theme="light"] .page-body .notice{background:#f2f2f2!important;color:#111!important;border:1px solid #777!important;border-left:4px solid #222!important}
+body[data-theme="light"] .page-body,.page-body{color:#111}
+body[data-theme="light"] .page-body>h1,body[data-theme="light"] .page-body>h2{color:#111}
+body[data-theme="light"] .page-body>p{color:#333}
+body[data-theme="light"] .page-body .list{background:#fff!important;color:#111;border-color:#888!important}
+body[data-theme="light"] .page-body .list p{color:#333}
+body[data-theme="light"] .room-hero{background:linear-gradient(110deg,#fff,#eee)!important;color:#111;border-color:#777!important}
+body[data-theme="light"] .room-hero p,body[data-theme="light"] .room-hero .eyebrow{color:#333}
+body[data-theme="light"] .metric,body[data-theme="light"] .room-summary article,body[data-theme="light"] .deal-card,body[data-theme="light"] .glass-card{background:#fff!important;color:#111;border-color:#888!important}
+body[data-theme="light"] .dash-welcome h1,body[data-theme="light"] .room-hero h1,body[data-theme="light"] .glass-card h2,body[data-theme="light"] .deal-card h3{color:#111}
+body[data-theme="light"] .dash-welcome p,body[data-theme="light"] .metric span,body[data-theme="light"] .metric small,body[data-theme="light"] .room-summary small,body[data-theme="light"] .deal-card>p,body[data-theme="light"] .glass-card>p{color:#444}
+body[data-theme="light"] .deal-card-foot{border-color:#bbb}body[data-theme="light"] .deal-card-foot b{color:#111}
+body[data-theme="light"] .empty-state{color:#444;border-color:#777}body[data-theme="light"] .empty-state h3{color:#111}
+body[data-theme="light"] .stack-form label{color:#222}body[data-theme="light"] .stack-form input,body[data-theme="light"] .stack-form textarea,body[data-theme="light"] .stack-form select{background:#fff!important;color:#111!important;border-color:#777!important}
+body[data-theme="light"] .form-note,body[data-theme="light"] .role-note{color:#444}body[data-theme="light"] .join-card{background:#f8f8f8!important}
+body[data-theme="light"] .terms-copy{color:#222;border-color:#bbb}body[data-theme="light"] .party-row{background:#f5f5f5;border-color:#bbb;color:#111}
+body[data-theme="light"] .party-row small,body[data-theme="light"] .back-link{color:#444}
+body[data-theme="light"] .room-code{background:#fff;border-color:#777}body[data-theme="light"] .room-code small,body[data-theme="light"] .room-code button{color:#333}
+body[data-theme="light"] .message{background:#f5f5f5;border-color:#bbb}body[data-theme="light"] .message span,body[data-theme="light"] .message p{color:#333}
+body[data-theme="light"] .empty-chat{color:#444}body[data-theme="light"] .message-form textarea{background:#fff;color:#111;border-color:#777}
+body[data-theme="light"] .callout{background:#f2f2f2!important;color:#111!important;border-color:#777!important}
+body[data-theme="light"] .portal-footer{color:#444!important}
+@media(max-width:760px){.site-header{display:grid;grid-template-columns:1fr auto;gap:8px}.site-brand{grid-row:1;grid-column:1}.site-controls{grid-row:1;grid-column:2}.site-header nav{grid-row:2;grid-column:1 / -1;justify-content:flex-start;flex-wrap:wrap}}
