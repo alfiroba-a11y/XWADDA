@@ -14,6 +14,8 @@ In Coolify, keep the application build strategy set to **Dockerfile**, base dire
 
 Keep the existing MongoDB service and application variables. The app accepts `MONGO_URI` or `MONGODB_URI`; either must contain MongoDB's internal Coolify connection string. Do not use `127.0.0.1` or `localhost` for the database host because the app runs in a separate container. Keep the database private; do not expose port 27017 publicly. Email verification requires working SMTP variables before users can complete signup. Keep merchant credentials and all secrets in Coolify, never in GitHub.
 
+Set `APP_URL` to the public site URL for verification emails. Set `SUPPORT_EMAIL` when the support address is ready; the Contact Support page uses that value. The public landing page has separate Sign in and Create account links. Passwords must be at least 6 characters.
+
 ## Shared-room flow
 
 1. Sign in and create a room as buyer, seller, or third party. XWADDA generates the five-character code.
