@@ -1,7 +1,10 @@
 /outputs/
 /work/
+/node_modules/
+/logs/
 /xwadda-private/
 **/config.php
 .env
 .env.*
+!.env.example
 *.zip
