@@ -1,0 +1,12 @@
+XWADDA wallet, payment review and receipt update
+
+Install at the repository root used by Coolify, then deploy the updated image.
+Keep existing environment values. Ensure SESSION_SECRET remains stable; wallet payout data is encrypted using it.
+
+M-Pesa uses HashBack-hosted HashPay checkout. Set HASHPAY_ACCOUNT_ID and HASHPAY_WEBHOOK_SECRET, and configure the provider callback to /hashpay-webhook.php on the HTTPS site. The app will not treat a browser-only callback as proof of payment.
+
+Payout destinations are encrypted member preferences. They do not trigger a transfer. Admins must process real releases/refunds with the relevant payment provider and enter the actual transfer reference before recording the final state. Refund records require both parties' consent.
+
+Deal members can download an XWADDA-generated HTML transaction record and print or save it as PDF. The five-star circular stamp identifies the platform record and is not a provider or legal certificate.
+
+No .env file or merchant secret is included in this archive.

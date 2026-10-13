@@ -38,7 +38,11 @@ Five-character codes are invitations, not passwords. Require accounts to join an
 
 ## Payment operations
 
-HashBack M-Pesa collection needs active merchant credentials and the provider's confirmed callback configuration. USDT TRC20 and BEP20 deposits are submitted for manual on-chain review. This application does not automatically move funds: admin verification, payouts, and refunds are manual operations. Confirm the transfer with the appropriate provider or chain before recording it in the admin panel.
+Members can store M-Pesa, Binance Pay ID, and USDT BEP20/TRC20 payout destinations in **Wallet & payouts**. These values are encrypted with a key derived from `SESSION_SECRET`; keep that secret stable across deployments and backups or saved wallet values cannot be decrypted. Blank fields keep the previous value; use the clear checkbox to remove a destination.
+
+HashBack HashPay opens the provider's M-Pesa checkout/prompt. The app shows an animated waiting state and can resend the prompt using the same pending payment reference. A browser callback only records a claim for review; it never confirms funds. A valid signed provider webhook can confirm a matching amount and merchant account, or an admin can manually record a deposit after checking the provider/chain receipt. The provider checkout remains hosted by HashBack, so it cannot be made fully in-app. See [HashBack's payment documentation](https://www.hashback.co.ke/documentation).
+
+USDT TRC20 and BEP20 deposits are submitted for manual on-chain review. The application does not currently initiate M-Pesa, Binance Pay, or blockchain payouts from the saved wallet destinations. Admins must make the real payout/refund through the provider or wallet and then record its transfer reference in the admin panel. A refund cannot be recorded until both buyer and seller agree. Deal members can download an XWADDA-generated HTML transaction record and print/save it as PDF; its circular five-star stamp is an XWADDA record mark, not a provider, bank, or legal certification.
 
 ## InterServer VPS
 
