@@ -51,7 +51,7 @@ const RoomMessage = mongoose.model('RoomMessage', new mongoose.Schema({ dealId: 
 const PaymentIntent = mongoose.model('PaymentIntent', new mongoose.Schema({ dealId: { type: mongoose.Schema.Types.ObjectId, ref: 'Deal', required: true }, provider: { type: String, enum: ['hashpay','crypto'], required: true }, providerReference: { type: String, required: true, unique: true }, network: String, amountMinor: { type: Number, required: true }, currency: { type: String, enum: ['KES','USDT'], required: true }, status: { type: String, enum: ['pending','confirmed','failed','exception'], default: 'pending' }, providerTransactionId: String, providerPayload: Object, createdAt: { type: Date, default: Date.now } }));
 
 app.use(session({ name: 'xwadda.sid', secret: process.env.SESSION_SECRET || 'development-only-change-this-secret-32', resave: false, saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl, collectionName: 'sessions', ttl: 60 * 60 * 24 * 7 }),
+  store: MongoStore.create({ mongoUrl: mongoUri, collectionName: 'sessions', ttl: 60 * 60 * 24 * 7 }),
   cookie: { httpOnly: true, sameSite: 'lax', secure: prod, maxAge: 7 * 24 * 60 * 60 * 1000 }
 }));
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 12, standardHeaders: 'draft-7', legacyHeaders: false });
