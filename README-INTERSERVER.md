@@ -1,68 +1,33 @@
-# XWADDA.KE — deploy from GitHub with Coolify
+# XWADDA.KE on InterServer with Coolify
 
-This package runs XWADDA.KE as a Dockerized Node.js application with MongoDB. Use Coolify on the InterServer Ubuntu VPS for a Render-style dashboard workflow: link GitHub, set environment variables, deploy, and manage the MongoDB service.
+XWADDA is a Node.js and MongoDB application. The public landing page explains the service; the account dashboard and deal history appear only after sign-in. Buyer, seller and third-party participants share a private room opened with a unique five-character code.
 
-## What is included
+## Update the live application
 
-- Black-and-white XWADDA interface, logo, market/seller/safety sections, progressive fee preview, and copyright footer.
-- MongoDB-backed account, email verification, deal, payment-review, safety-report, and audit records.
-- Seller invitations and acceptance, funded delivery flow, completion, disputes, and admin review.
-- Progressive buyer fee: KES 3% of first KES 10,000, 2% of next KES 90,000, 1% above; USDT 2.5% of first $100, 1.5% of next $900, 1% above.
-- USDT TRC20/BEP20 deposit instructions with manual on-chain review.
-- HashBack M-Pesa checkout/webhook routes that require your merchant credentials and verified callback setup.
+Put these files at the root of the GitHub repository connected to Coolify:
 
-## Deploy to your active InterServer Ubuntu VPS
+- `Dockerfile`, `package.json`, `server.js`, and `portal.js`
+- `public/landing.html`
+- `public/assets/portal.css`, `public/assets/deal-fee.js`, the XWADDA logo, and both crypto QR images
 
-Coolify is InterServer's self-hostable deployment dashboard. The VPS marketplace has a Coolify template for new servers; for your existing Ubuntu VPS, the Coolify installer is the direct setup path. Coolify recommends starting on a fresh VPS and requires at least 2 CPU cores, 2 GB RAM and 10 GB disk for itself. If the VPS already hosts sites or services, back those up and check for port conflicts first.
+In Coolify, keep the application build strategy set to **Dockerfile**, base directory `/`, Dockerfile location `/Dockerfile`, and exposed port `3000`. Push the repository update and deploy the new commit. The Dockerfile copies the app files into the image.
 
-1. In the InterServer VPS details, copy the server IP and root SSH credentials. From Windows PowerShell, connect:
+Keep the existing MongoDB service and application variables. The app accepts `MONGO_URI` or `MONGODB_URI`; either must contain MongoDB's internal Coolify connection string. Do not use `127.0.0.1` or `localhost` for the database host because the app runs in a separate container. Keep the database private; do not expose port 27017 publicly. Email verification requires working SMTP variables before users can complete signup. Keep merchant credentials and all secrets in Coolify, never in GitHub.
 
-   ```powershell
-   ssh root@YOUR_VPS_IP
-   ```
+## Shared-room flow
 
-2. On the VPS, install Coolify with its official installer:
+1. Sign in and create a room as buyer, seller, or third party. XWADDA generates the five-character code.
+2. Share the code. A signed-in participant chooses one of the unclaimed roles to join. One account cannot take two seats, and the same display name cannot occupy multiple seats in a room.
+3. Once buyer and seller have joined, the buyer can deposit through the configured payment flow. Deposits remain pending until an admin verifies receipt.
+4. After funding, the seller marks delivery in the room. The buyer can approve delivery and request payout. Disputes and refund requests pause the room for admin review.
+5. An admin records the result after manually handling the payout or refund. The room timeline records participant messages and status changes.
 
-   ```bash
-   curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
-   ```
+Five-character codes are invitations, not passwords. Require accounts to join and do not share codes publicly. Dashboard totals and room history are calculated from the signed-in user's actual deal records; no sample account history is shown.
 
-3. When installation finishes, open `http://YOUR_VPS_IP:8000` in your browser and create the Coolify admin account right away. Keep the generated Coolify secrets backed up. Keep ports 80, 443 and 8000 reachable as needed; never expose MongoDB's port 27017 publicly.
+## Payment operations
 
-4. In Coolify, create a project, choose **New Resource → Application → GitHub**, connect GitHub, and select this repository and its branch. Choose Dockerfile as the build method (Coolify can detect the repository's root `Dockerfile`). Set the exposed application port to `3000`.
+HashBack M-Pesa collection needs active merchant credentials and the provider's confirmed callback configuration. USDT TRC20 and BEP20 deposits are submitted for manual on-chain review. This application does not automatically move funds: admin verification, payouts, and refunds are manual operations. Confirm the transfer with the appropriate provider or chain before recording it in the admin panel.
 
-5. Create the database in that same Coolify project with **New Resource → Database → MongoDB**. Deploy the database, then copy its **Internal URL** from its configuration. Do not turn on public access for MongoDB.
+## InterServer VPS
 
-6. In the app's **Environment Variables**, add:
-
-   ```text
-   NODE_ENV=production
-   PORT=3000
-   APP_URL=https://YOUR_DOMAIN
-   MONGODB_URI=PASTE_THE_MONGODB_INTERNAL_URL
-   SESSION_SECRET=PASTE_A_LONG_RANDOM_SECRET
-   ADMIN_EMAIL=YOUR_ADMIN_EMAIL
-   MAIL_HOST=YOUR_SMTP_HOST
-   MAIL_PORT=587
-   MAIL_USER=YOUR_SMTP_USERNAME
-   MAIL_PASSWORD=YOUR_SMTP_PASSWORD
-   MAIL_FROM=XWADDA.KE <accounts@YOUR_DOMAIN>
-   HASHPAY_ACCOUNT_ID=YOUR_HASHBACK_ACCOUNT_ID
-   HASHPAY_WEBHOOK_SECRET=YOUR_HASHBACK_WEBHOOK_SECRET
-   TRC20_ADDRESS=TMVimVUeR8u9R6HdjfGzeUeeZtzi19KM72
-   BEP20_ADDRESS=0x352b897c40ae74619ed792932a1e561ebcb7331e
-   ```
-
-   Keep these values in Coolify's environment settings; never commit real credentials to GitHub. Create a random `SESSION_SECRET` in a password manager or with `openssl rand -base64 48`.
-
-7. Add your domain to the application's Domains setting, point its DNS A record at the VPS IP, then deploy. Coolify can provide HTTPS after DNS points to the VPS. Check `https://YOUR_DOMAIN/health` for `{"ok":true,"service":"xwadda"}`.
-
-8. Create an account using the `ADMIN_EMAIL` address, verify it through email, and sign in to the admin page. In Coolify, enable Git-based auto-deploy if you want commits pushed to the connected branch to deploy automatically.
-
-Coolify's install and app setup instructions: [Self-hosted installation](https://coolify.io/docs/start-with-self-hosted), [deploy applications](https://coolify.io/docs/applications/), [MongoDB databases](https://coolify.io/docs/databases/).
-
-## Payment readiness
-
-HashBack M-Pesa collection requires live merchant credentials and a confirmed callback signature/payload setup before it can accept payments. Set the callback to `https://YOUR_DOMAIN/hashpay-webhook.php` only after HashBack confirms the live webhook format. Crypto payments remain pending until an admin verifies the exact network, wallet, amount and transaction on-chain. Payouts and refunds are manual outside this app; the admin panel records the decision but does not transfer funds.
-
-The sample market cards, safety notices and overview metrics are illustrative. Add operating policies, tested backups, incident response, identity and dispute controls, and appropriate legal/compliance readiness before accepting customer funds.
+Coolify runs on the existing InterServer Ubuntu VPS. Open the dashboard at `http://YOUR_VPS_IP:8000`, connect the GitHub source, and use the settings above. For public HTTPS, attach a domain in Coolify and point its DNS to the VPS. Do not expose MongoDB publicly.
