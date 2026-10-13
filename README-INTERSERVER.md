@@ -30,9 +30,9 @@ The app listens on port 3000 while MongoDB connects and retries, so a database o
 
 1. Sign in and create a room as buyer, seller, or third party. XWADDA generates the five-character code.
 2. Share the code. A signed-in participant chooses one of the unclaimed roles to join. One account cannot take two seats, and the same display name cannot occupy multiple seats in a room.
-3. Once buyer and seller have joined, the buyer can deposit through the configured payment flow. Deposits remain pending until an admin verifies receipt.
-4. After funding, the seller marks delivery in the room. The buyer can approve delivery and request payout. Disputes and refund requests pause the room for admin review.
-5. An admin records the result after manually handling the payout or refund. The room timeline records participant messages and status changes.
+3. Once buyer and seller have joined, the buyer can deposit through the configured payment flow. Deposits remain pending until XWADDA confirms receipt.
+4. After funding, the seller marks delivery in the room. The buyer can approve delivery and request payout. Disputes and refund requests pause the room for XWADDA support review.
+5. XWADDA records the result after the payout or refund has been processed. The room timeline records participant messages and status changes.
 
 Five-character codes are invitations, not passwords. Require accounts to join and do not share codes publicly. Dashboard totals and room history are calculated from the signed-in user's actual deal records; no sample account history is shown.
 
@@ -40,9 +40,9 @@ Five-character codes are invitations, not passwords. Require accounts to join an
 
 Members can store M-Pesa, Binance Pay ID, and USDT BEP20/TRC20 payout destinations in **Wallet & payouts**. These values are encrypted with a key derived from `SESSION_SECRET`; keep that secret stable across deployments and backups or saved wallet values cannot be decrypted. Blank fields keep the previous value; use the clear checkbox to remove a destination.
 
-HashBack HashPay opens the provider's M-Pesa checkout/prompt. The app shows an animated waiting state and can resend the prompt using the same pending payment reference. A browser callback only records a claim for review; it never confirms funds. A valid signed provider webhook can confirm a matching amount and merchant account, or an admin can manually record a deposit after checking the provider/chain receipt. The provider checkout remains hosted by HashBack, so it cannot be made fully in-app. See [HashBack's payment documentation](https://www.hashback.co.ke/documentation).
+The M-Pesa checkout is provided through XWADDA. The app shows an animated waiting state and can resend the prompt using the same pending payment reference. A browser response only records a claim for review; it never confirms funds. A verified payment notification can confirm a matching amount and merchant account, or XWADDA can record a deposit after checking the payment or chain record. The payment window is hosted externally and may display the payment service's own branding.
 
-USDT TRC20 and BEP20 deposits are submitted for manual on-chain review. The application does not currently initiate M-Pesa, Binance Pay, or blockchain payouts from the saved wallet destinations. Admins must make the real payout/refund through the provider or wallet and then record its transfer reference in the admin panel. A refund cannot be recorded until both buyer and seller agree. Deal members can download an XWADDA-generated HTML transaction record and print/save it as PDF; its circular five-star stamp is an XWADDA record mark, not a provider, bank, or legal certification.
+USDT TRC20 and BEP20 deposits are submitted for manual on-chain review. The application does not currently initiate M-Pesa, Binance Pay, or blockchain payouts from the saved wallet destinations. XWADDA must make the real payout/refund through the connected payment service or wallet and then record its transfer reference in the control center. A refund cannot be recorded until both buyer and seller agree. Deal members can download an XWADDA-generated PDF transaction record; its circular five-star stamp is an XWADDA record mark, not a provider, bank, or legal certification.
 
 ## InterServer VPS
 
