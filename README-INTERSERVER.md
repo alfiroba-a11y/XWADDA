@@ -16,6 +16,14 @@ Keep the existing MongoDB service and application variables. The app accepts `MO
 
 Set `APP_URL` to the public site URL for verification emails. Set `SUPPORT_EMAIL` when the support address is ready; the Contact Support page uses that value. The public landing page has separate Sign in and Create account links. Passwords must be at least 6 characters. When SMTP is absent, accounts are verified at signup so people can sign in; configured SMTP enables email verification.
 
+### Sign-in and Google
+
+The sign-in and registration forms use a signed, time-limited form token. It does not depend on the browser retaining the same Mongo session cookie between the page view and form submit, preventing the proxy-related “Form expired” 419 shown by older builds. After updating, redeploy the application.
+
+To enable Google sign-in, set `GOOGLE_CLIENT_ID` in Coolify's **Production** environment. Create a Google OAuth client with application type **Web application** and add the site's exact HTTPS origin to **Authorized JavaScript origins** (for example, `https://xwadda.example`). Google sign-in requires a secure HTTPS domain; the temporary `http://...sslip.io` address shown in setup is not suitable for Google OAuth. Add the same variable to Preview only if preview deployments should offer Google sign-in. Users can use the same verified email as their existing password account.
+
+The app defaults to automatic secure-cookie detection. If you are temporarily testing on the HTTP-only Coolify `sslip.io` link and sign-in succeeds but does not stay signed in, set `COOKIE_SECURE=false`. Once the site has HTTPS, set `COOKIE_SECURE=true` (or remove the variable to use automatic detection). Do not leave secure cookies disabled on a public HTTPS site.
+
 ## Shared-room flow
 
 1. Sign in and create a room as buyer, seller, or third party. XWADDA generates the five-character code.

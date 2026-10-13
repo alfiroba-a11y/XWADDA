@@ -53,7 +53,7 @@ const PaymentIntent = mongoose.model('PaymentIntent', new mongoose.Schema({ deal
 
 app.use(session({ name: 'xwadda.ke.sid', secret: process.env.SESSION_SECRET || 'development-only-change-this-secret-32', resave: false, saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: mongoUri, dbName: mongoDbName, collectionName: 'xwadda_sessions', ttl: 60 * 60 * 24 * 7 }),
-  cookie: { httpOnly: true, sameSite: 'lax', secure: 'auto', maxAge: 7 * 24 * 60 * 60 * 1000 }
+  cookie: { httpOnly: true, sameSite: 'lax', secure: process.env.COOKIE_SECURE === 'true' ? true : process.env.COOKIE_SECURE === 'false' ? false : 'auto', maxAge: 7 * 24 * 60 * 60 * 1000 }
 }));
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 12, standardHeaders: 'draft-7', legacyHeaders: false });
 const roomJoinLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: 'draft-7', legacyHeaders: false });
@@ -65,13 +65,21 @@ function feeMinor(currency, principal) {
   throw new Error('Unsupported currency');
 }
 function csrf(req,res,next) {
-  if (!req.session.csrf) req.session.csrf = crypto.randomBytes(32).toString('hex');
-  res.locals.csrf = req.session.csrf; next();
+  // A stateless signed token avoids false 419s when a reverse proxy or scheme
+  // change causes the browser to omit the Mongo session cookie on a fresh form.
+  const issued = `${Date.now()}.${crypto.randomBytes(18).toString('hex')}`;
+  const signature = crypto.createHmac('sha256', process.env.SESSION_SECRET || 'development-only-change-this-secret-32').update(issued).digest('hex');
+  res.locals.csrf = `${issued}.${signature}`; next();
 }
 function checkCsrf(req,res,next) {
-  const token = req.body && req.body.csrf;
-  const sent=Buffer.from(String(token||'')), expected=Buffer.from(String(req.session.csrf||''));
-  if (!sent.length || sent.length!==expected.length || !crypto.timingSafeEqual(sent,expected)) return res.status(419).send('Form expired. Refresh and try again.');
+  const token = String(req.body && req.body.csrf || '');
+  const parts = token.split('.');
+  if (parts.length !== 3 || !/^\d{13}$/.test(parts[0]) || !/^[a-f0-9]{36}$/.test(parts[1]) || !/^[a-f0-9]{64}$/.test(parts[2])) return res.status(419).send('This form has expired. Refresh the page and try again.');
+  const issuedAt = Number(parts[0]);
+  if (!Number.isSafeInteger(issuedAt) || issuedAt > Date.now() + 60_000 || Date.now() - issuedAt > 4 * 60 * 60 * 1000) return res.status(419).send('This form has expired. Refresh the page and try again.');
+  const expected = crypto.createHmac('sha256', process.env.SESSION_SECRET || 'development-only-change-this-secret-32').update(`${parts[0]}.${parts[1]}`).digest();
+  const supplied = Buffer.from(parts[2], 'hex');
+  if (supplied.length !== expected.length || !crypto.timingSafeEqual(supplied, expected)) return res.status(419).send('This form has expired. Refresh the page and try again.');
   next();
 }
 function signedIn(req,res,next) { if (!req.session.user) return res.redirect('/account'); next(); }
@@ -85,6 +93,33 @@ function amountFromForm(value,currency) { if (!/^\d{1,9}(\.\d{1,2})?$/.test(valu
 function money(currency,minor) { return `${currency} ${(minor/100).toLocaleString('en-KE',{minimumFractionDigits:currency==='KES'?0:2,maximumFractionDigits:2})}`; }
 function mailer() { if (!process.env.MAIL_HOST) return null; return nodemailer.createTransport({host:process.env.MAIL_HOST,port:Number(process.env.MAIL_PORT||587),secure:Number(process.env.MAIL_PORT)===465,auth:{user:process.env.MAIL_USER,pass:process.env.MAIL_PASSWORD}}); }
 async function sendMail(to,subject,text) { const t=mailer(); if(!t) throw new Error('Email is not configured. Add SMTP settings before registration.'); return t.sendMail({from:process.env.MAIL_FROM,to,subject,text}); }
+function googleSignInMarkup(csrfToken) {
+  const clientId = String(process.env.GOOGLE_CLIENT_ID || '').trim();
+  if (!clientId) return '';
+  return `<div class="auth-divider"><span>OR</span></div><form id="google-auth-form" method="post" action="/auth/google"><input type="hidden" name="csrf" value="${escapeHtml(csrfToken)}"><input id="google-id-token" type="hidden" name="credential"><div id="google-signin-button"></div></form><script>function handleGoogleCredential(response){document.getElementById('google-id-token').value=response.credential;document.getElementById('google-auth-form').requestSubmit()}</script><script src="https://accounts.google.com/gsi/client" async defer onload="google.accounts.id.initialize({client_id:${JSON.stringify(clientId)},callback:handleGoogleCredential});google.accounts.id.renderButton(document.getElementById('google-signin-button'),{theme:'outline',size:'large',shape:'rectangular',text:'continue_with',width:Math.min(document.getElementById('google-signin-button').clientWidth||320,400)})"></script>`;
+}
+let googleCertCache = { certs: null, expiresAt: 0 };
+async function verifyGoogleCredential(token) {
+  const pieces = String(token || '').split('.');
+  if (pieces.length !== 3) throw new Error('Google sign-in could not be verified. Please try again.');
+  let header, claims;
+  try { header = JSON.parse(Buffer.from(pieces[0], 'base64url').toString()); claims = JSON.parse(Buffer.from(pieces[1], 'base64url').toString()); }
+  catch { throw new Error('Google sign-in could not be verified. Please try again.'); }
+  if (header.alg !== 'RS256' || !header.kid || !process.env.GOOGLE_CLIENT_ID) throw new Error('Google sign-in is not configured correctly.');
+  if (!googleCertCache.certs || googleCertCache.expiresAt < Date.now()) {
+    const response = await fetch('https://www.googleapis.com/oauth2/v1/certs');
+    if (!response.ok) throw new Error('Google sign-in is temporarily unavailable.');
+    const certs = await response.json();
+    const cacheControl = response.headers.get('cache-control') || '';
+    const maxAge = Number((cacheControl.match(/max-age=(\d+)/i) || [])[1] || 3600);
+    googleCertCache = { certs, expiresAt: Date.now() + Math.min(maxAge, 3600) * 1000 };
+  }
+  const cert = googleCertCache.certs[header.kid];
+  if (!cert || !crypto.verify('RSA-SHA256', Buffer.from(`${pieces[0]}.${pieces[1]}`), cert, Buffer.from(pieces[2], 'base64url'))) throw new Error('Google sign-in could not be verified. Please try again.');
+  const now = Math.floor(Date.now() / 1000);
+  if (!['accounts.google.com', 'https://accounts.google.com'].includes(claims.iss) || claims.aud !== process.env.GOOGLE_CLIENT_ID || !claims.sub || !claims.email || claims.email_verified !== true || !Number.isFinite(claims.exp) || claims.exp <= now || (claims.iat && claims.iat > now + 60)) throw new Error('Google did not provide a verified account.');
+  return { email: String(claims.email).toLowerCase(), name: String(claims.name || claims.given_name || claims.email).trim().slice(0, 120) };
+}
 
 const ROLE_FIELDS = { buyer: ['buyerId','buyerName','buyerNameKey'], seller: ['sellerId','sellerName','sellerNameKey'], third_party: ['thirdPartyId','thirdPartyName','thirdPartyNameKey'] };
 function roomRole(deal,userId) { for (const role of Object.keys(ROLE_FIELDS)) if (String(deal[ROLE_FIELDS[role][0]]||'')===String(userId)) return role; return null; }
@@ -98,9 +133,27 @@ app.use(csrf);
 app.get('/contact',(req,res)=>{const email=String(process.env.SUPPORT_EMAIL||'').trim();const content='<section class="auth-card"><span class="eyebrow">XWADDA SUPPORT</span><h1>How can we help?</h1><p>For a question about a room or payment, include the five-character room code and the email on your account. Do not send passwords or private keys.</p>'+(email?'<p><a class="button primary" href="mailto:'+escapeHtml(email)+'">Email support</a></p>':'<p>Support email is being set up. Please check back soon.</p>')+'<p><a href="/">← Back to XWADDA</a></p></section>';res.send(render('Contact support',content,req));});
 app.get('/health', (req,res)=>res.json({ok:true, service:'xwadda'}));
 app.get('/', async(req,res)=>{if(!req.session.user){const html=fs.readFileSync(path.join(__dirname,'public','landing.html'),'utf8');return res.type('html').send(html);}const deals=await accountDeals(req.session.user);return res.send(render('Your dashboard',portal.dashboard(req.session.user,deals,res.locals.csrf,{escapeHtml,money,statusLabel:roomStatusLabel}),req));});
-app.get('/signin',(req,res)=>res.send(render('Sign in',(req.query.message?'<div class="notice">'+escapeHtml(req.query.message)+'</div>':'')+'<section class="auth-card"><span class="eyebrow">WELCOME BACK</span><h1>Sign in to XWADDA</h1><p>Your account and deal history are private to you.</p><form method="post" action="/auth/login" class="auth-form"><input type="hidden" name="csrf" value="'+escapeHtml(res.locals.csrf)+'"><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Password<input type="password" name="password" autocomplete="current-password" required></label><button class="button primary full">Sign in</button></form><p class="auth-switch">New to XWADDA? <a href="/signup">Create an account</a></p></section>',req)));
-app.get('/signup',(req,res)=>res.send(render('Create account',(req.query.message?'<div class="notice">'+escapeHtml(req.query.message)+'</div>':'')+'<section class="auth-card"><span class="eyebrow">GET STARTED</span><h1>Create your account</h1><p>One account to create shared rooms and join deals.</p><form method="post" action="/auth/register" class="auth-form"><input type="hidden" name="csrf" value="'+escapeHtml(res.locals.csrf)+'"><label>Your name<input name="name" autocomplete="name" required minlength="2" maxlength="120"></label><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Password<input type="password" name="password" autocomplete="new-password" minlength="6" required><small>At least 6 characters.</small></label><button class="button primary full">Create account</button></form><p class="auth-switch">Already registered? <a href="/signin">Sign in</a></p></section>',req)));
+app.get('/signin',(req,res)=>{
+  const notice=req.query.message?'<div class="notice">'+escapeHtml(req.query.message)+'</div>':'';
+  const content=notice+'<section class="auth-card"><span class="eyebrow">WELCOME BACK</span><h1>Sign in to XWADDA</h1><p>Your account and deal history are private to you.</p><form method="post" action="/auth/login" class="auth-form"><input type="hidden" name="csrf" value="'+escapeHtml(res.locals.csrf)+'"><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Password<input type="password" name="password" autocomplete="current-password" required></label><button class="button primary full">Sign in</button></form>'+googleSignInMarkup(res.locals.csrf)+'<p class="auth-switch">New to XWADDA? <a href="/signup">Create an account</a></p></section>';
+  res.send(render('Sign in',content,req));
+});
+app.get('/signup',(req,res)=>{
+  const notice=req.query.message?'<div class="notice">'+escapeHtml(req.query.message)+'</div>':'';
+  const content=notice+'<section class="auth-card"><span class="eyebrow">GET STARTED</span><h1>Create your account</h1><p>One account to create shared rooms and join deals.</p><form method="post" action="/auth/register" class="auth-form"><input type="hidden" name="csrf" value="'+escapeHtml(res.locals.csrf)+'"><label>Your name<input name="name" autocomplete="name" required minlength="2" maxlength="120"></label><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Password<input type="password" name="password" autocomplete="new-password" minlength="6" required><small>At least 6 characters.</small></label><button class="button primary full">Create account</button></form>'+googleSignInMarkup(res.locals.csrf)+'<p class="auth-switch">Already registered? <a href="/signin">Sign in</a></p></section>';
+  res.send(render('Create account',content,req));
+});
 app.get('/account',(req,res)=>res.redirect('/signin'));
+app.post('/auth/google',authLimiter,checkCsrf,async(req,res)=>{
+  try {
+    const identity=await verifyGoogleCredential(req.body.credential);
+    let user=await User.findOne({email:identity.email});
+    if(!user) user=await User.create({name:identity.name,email:identity.email,role:identity.email===String(process.env.ADMIN_EMAIL||'').trim().toLowerCase()?'admin':'user',passwordHash:await bcrypt.hash(crypto.randomBytes(32).toString('hex'),12),verifiedAt:new Date()});
+    else if(!user.verifiedAt){user.verifiedAt=new Date();await user.save();}
+    if(user.status!=='active') return res.redirect('/signin?message='+encodeURIComponent('This account is not currently available.'));
+    req.session.regenerate(err=>{if(err)return res.status(500).send('Sign-in failed.');req.session.user={id:String(user._id),name:user.name,email:user.email,role:user.role};req.session.save(saveErr=>saveErr?res.status(500).send('Sign-in failed. Please try again.'):res.redirect('/'));});
+  } catch(e) { res.redirect('/signin?message='+encodeURIComponent(e.message||'Google sign-in failed. Please try again.')); }
+});
 app.post('/auth/register',authLimiter,checkCsrf,async(req,res)=>{
   try {
     const name=String(req.body.name||'').trim(),email=String(req.body.email||'').trim().toLowerCase(),password=String(req.body.password||'');
@@ -112,7 +165,7 @@ app.post('/auth/register',authLimiter,checkCsrf,async(req,res)=>{
   } catch(e) { return res.redirect('/signup?message='+encodeURIComponent(e.code===11000?'That email is already registered.':e.message||'Account creation failed.')); }
 });
 app.get('/verify',async(req,res)=>{const hash=crypto.createHash('sha256').update(String(req.query.token||'')).digest('hex');const user=await User.findOne({verifyHash:hash,verifyExpires:{$gt:new Date()}});if(!user)return res.status(400).send(render('Verification',`<h1>Verification link expired</h1><p>Please register again or contact support.</p>`,req));user.verifiedAt=new Date();user.verifyHash=undefined;user.verifyExpires=undefined;await user.save();res.redirect('/signin?message='+encodeURIComponent('Email verified. You can now sign in.'));});
-app.post('/auth/login',authLimiter,checkCsrf,async(req,res)=>{const email=String(req.body.email||'').trim().toLowerCase();const user=await User.findOne({email});if(!user||!await bcrypt.compare(String(req.body.password||''),user.passwordHash))return res.redirect('/signin?message='+encodeURIComponent('Email or password is incorrect.'));if(!user.verifiedAt)return res.redirect('/signin?message='+encodeURIComponent('Verify your email before signing in.'));if(user.status!=='active')return res.redirect('/signin?message='+encodeURIComponent('This account is not currently available.'));req.session.regenerate(err=>{if(err)return res.status(500).send('Sign-in failed.');req.session.user={id:String(user._id),name:user.name,email:user.email,role:user.role};req.session.csrf=crypto.randomBytes(32).toString('hex');res.redirect('/');});});
+app.post('/auth/login',authLimiter,checkCsrf,async(req,res)=>{const email=String(req.body.email||'').trim().toLowerCase();const user=await User.findOne({email});if(!user||!await bcrypt.compare(String(req.body.password||''),user.passwordHash))return res.redirect('/signin?message='+encodeURIComponent('Email or password is incorrect.'));if(!user.verifiedAt)return res.redirect('/signin?message='+encodeURIComponent('Verify your email before signing in.'));if(user.status!=='active')return res.redirect('/signin?message='+encodeURIComponent('This account is not currently available.'));req.session.regenerate(err=>{if(err)return res.status(500).send('Sign-in failed.');req.session.user={id:String(user._id),name:user.name,email:user.email,role:user.role};req.session.save(saveErr=>saveErr?res.status(500).send('Sign-in failed. Please try again.'):res.redirect('/'));});});
 app.post('/logout',checkCsrf,(req,res)=>req.session.destroy(()=>res.redirect('/')));
 app.get('/my-deals',signedIn,(req,res)=>res.redirect('/'));
 app.post('/deals',signedIn,checkCsrf,async(req,res)=>{try{
