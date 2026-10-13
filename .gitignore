@@ -1,0 +1,7 @@
+/outputs/
+/work/
+/xwadda-private/
+**/config.php
+.env
+.env.*
+*.zip

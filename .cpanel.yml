@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    # Replace both paths with the account home and domain document root.
+    - export DEPLOYPATH=/home/CPANEL_USERNAME/public_html/
+    - export APPDEPLOYPATH=/home/CPANEL_USERNAME/xwadda-private/app/
+    - /bin/mkdir -p $DEPLOYPATH $APPDEPLOYPATH
+    - /bin/cp -R public/. $DEPLOYPATH
+    - /bin/cp -R app/. $APPDEPLOYPATH
