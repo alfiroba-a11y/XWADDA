@@ -1,0 +1,70 @@
+/* Layout direction based on the supplied reference: compact navigation, clear
+   content columns and simple bordered panels. XWADDA keeps its own monochrome identity. */
+:root{--cyan:#d8ff45;--blue:#d8ff45;--lime:#d8ff45;--line:#484848;--muted:#c5c5c5;--bg:#080808;--ink:#fafafa}
+body{background:#080808!important;color:#fafafa!important}
+.site-header{height:70px;background:#080808;border-color:#3b3b3b;padding:0 clamp(16px,4vw,58px)}
+.site-brand{gap:7px;letter-spacing:.01em}.site-brand img{display:none!important}
+.site-brand:before{content:"XW";display:inline-grid;place-items:center;height:32px;padding:0 5px 0 2px;border-bottom:2px solid var(--cyan);font:900 17px/1 var(--display);letter-spacing:-.13em;color:#fff}
+.site-brand small{color:var(--cyan)!important}
+.site-header nav{gap:20px;color:#e8e8e8}.site-header nav a{color:#e8e8e8}.site-header nav a:hover{color:var(--cyan)!important}
+.site-header .nav-cta,.nav-cta{background:#fff!important;border:1px solid #fff!important;color:#080808!important;box-shadow:none!important}
+.landing{max-width:1180px;padding:14px 28px 48px}
+.landing-hero{min-height:475px;padding:34px 0 44px;gap:25px}
+.hero-copy h1{letter-spacing:-.055em}.hero-copy h1 span{background:none;color:#d8ff45}
+.hero-copy>p{color:#d0d0d0}.hero-trust{color:#ccc;gap:12px}.hero-trust span{border:1px solid #555;border-radius:5px;padding:8px 10px}
+.orbit-card,.glass-card,.how-grid article,.metric,.room-summary article,.deal-card,.message,.page-body .row,.simple-page,.auth-card{background:#111!important;border:1px solid #505050!important;box-shadow:none!important}
+.orbit-card{transform:none;border-radius:12px}.glow{display:none}.float-code,.float-lock{background:#151515;border-color:#5a5a5a;box-shadow:none}
+.orbit-note,.room-preview-rows>div{background:#1b1b1b;border-color:#555}.room-preview-rows small{color:#ccc}
+.how-grid article,.feature-grid article,.payment-card{border-radius:8px;background:#111!important;border-color:#484848!important}
+.how-grid article:after{display:none}.how-section{padding:38px 0}.feature-section,.payments-section,.faq-section{padding:35px 0}
+.proof-strip{background:#111;border:1px solid #484848}.proof-strip>div{border-color:#484848}
+.landing-callout{background:#151515;border:1px solid #555;border-radius:8px}.landing-footnote{border-left-color:var(--cyan);color:#ddd}
+.button.primary,.button-primary,.page-body button:not(.nav-button){background:var(--cyan)!important;color:#080808!important;box-shadow:none!important}
+.button.secondary{background:#202020!important;border:1px solid #666;color:#fff!important}.button.ghost{background:#111;border-color:#777;color:#fff}
+.feature-grid p,.payments-section p,.payments-section li,.payment-card p,.faq-section details p{color:#ccc}
+.auth-card{max-width:470px;border-radius:10px;padding:28px}.auth-card h1{font-size:28px}.auth-form input{background:#070707;border-color:#666}
+.site-footer,.site-copyright,.portal-footer{color:#aaa!important;border-color:#444!important}
+
+/* Signed-in workspaces use the reference's fixed rail and open work area. */
+.authenticated-shell>.site-header,.authenticated-shell>.site-copyright{display:none!important}
+.authenticated-shell .page-body{min-height:100vh}
+.dashboard-shell{display:grid;grid-template-columns:232px minmax(0,1fr);gap:0;max-width:none;margin:0;padding:0;min-height:100vh}
+.app-sidebar{position:sticky;top:0;height:100vh;min-height:620px;display:flex;flex-direction:column;padding:24px 15px;background:#0b0b0b;border-right:1px solid #414141}
+.sidebar-brand{display:flex;align-items:center;gap:10px;margin:0 8px 42px;color:#fff;text-decoration:none;font:800 15px var(--display);letter-spacing:.04em}
+.sidebar-brand>b{font:900 16px var(--display);letter-spacing:-.13em;border-bottom:2px solid var(--cyan);padding:5px 5px 6px 2px}
+.sidebar-brand small{color:var(--cyan);font-size:9px}
+.sidebar-label{display:block;margin:0 10px 10px;color:#9e9e9e;font:700 9px var(--display);letter-spacing:.15em}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:12px 11px;margin:2px 0;border-radius:6px;color:#c9c9c9;text-decoration:none;font-size:12px}
+.sidebar-link:hover,.sidebar-link.active{background:#202020;color:#fff}.sidebar-link.active{box-shadow:inset 2px 0 var(--cyan)}
+.sidebar-bottom{margin-top:auto;padding:16px 9px 0;border-top:1px solid #414141;color:#ccc;font-size:11px}
+.sidebar-bottom>strong{display:block;margin:5px 0 13px;color:#fff;font-size:13px;overflow-wrap:anywhere}
+.sidebar-controls{display:flex;gap:6px;margin:10px 0}.sidebar-controls button,.sidebar-controls select{min-width:0;padding:7px;border:1px solid #666;border-radius:5px;background:#111;color:#fff;font-size:10px}.sidebar-controls select{flex:1}
+.sidebar-logout{padding:6px 0;border:0;background:none;color:#ddd;font-size:11px}
+.portal-content{min-width:0;padding:32px clamp(20px,3.2vw,48px) 18px}
+.dash-welcome{margin:2px 0 22px}.dash-welcome h1{font-size:29px}.dash-welcome p{color:#ccc}
+.metric-grid{gap:10px}.metric{border-radius:7px;padding:15px 17px}.metric strong{font-size:24px}.workspace-grid{grid-template-columns:minmax(0,1.25fr) minmax(285px,.8fr);gap:15px;margin-top:22px}
+.deal-card{border-radius:7px;padding:15px}.deal-card:hover{border-color:var(--cyan)!important;transform:none}
+.glass-card{border-radius:8px;padding:17px}.workspace-side{gap:10px}.join-card{background:#151515!important}
+.state-pill{background:#202020;color:#fff;border:1px solid #606060}.live-tag i{box-shadow:none!important}
+.stack-form{gap:9px}.stack-form input,.stack-form textarea,.stack-form select{border-radius:5px;background:#080808;color:#fff;border-color:#666}
+.stack-form input:focus,.stack-form textarea:focus,.stack-form select:focus{border-color:var(--cyan);box-shadow:0 0 0 2px #d8ff4520}
+.portal-footer{text-align:left;padding:20px 0 0;font-size:10px}
+@media(max-width:1000px){.workspace-grid{grid-template-columns:minmax(0,1.1fr) minmax(270px,.9fr)}.portal-content{padding:27px 20px}}
+@media(max-width:760px){.site-header{height:auto;min-height:64px;flex-wrap:wrap;padding:9px 14px}.site-header nav{display:flex;gap:12px;margin-left:auto}.site-controls{margin-left:0}.landing{padding:10px 18px 35px}.landing-hero{min-height:0;padding:38px 0 28px}.proof-strip{grid-template-columns:1fr}.proof-strip>div{border-right:0;border-bottom:1px solid #484848}.proof-strip>div:last-child{border-bottom:0}.dashboard-shell{grid-template-columns:1fr}.app-sidebar{position:static;height:auto;min-height:0;padding:13px 15px;border-right:0;border-bottom:1px solid #414141;display:grid;grid-template-columns:1fr auto;gap:8px}.sidebar-brand{margin:0 3px 8px}.sidebar-label{display:none}.sidebar-link{display:inline-flex;margin:0;padding:9px 7px;font-size:10px}.sidebar-bottom{grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:4px;padding:9px 3px 0}.sidebar-bottom>strong{margin:0 5px}.sidebar-controls{margin:0}.sidebar-logout{margin-left:auto}.portal-content{padding:22px 15px 14px}.workspace-grid{grid-template-columns:1fr}.workspace-side{grid-template-columns:1fr 1fr;align-items:start}.portal-footer{text-align:center}}
+@media(max-width:520px){.site-header nav{gap:8px}.site-header nav a{font-size:11px}.site-header nav a[href="#features"],.site-header nav a[href="#payments"]{display:none}.site-controls{gap:5px}.site-controls button,.site-controls select{padding:6px 7px;font-size:10px}.landing-hero{grid-template-columns:1fr}.hero-copy h1{font-size:43px}.hero-visual{min-height:300px}.how-grid{grid-template-columns:1fr 1fr}.feature-grid{grid-template-columns:1fr}.payments-section{grid-template-columns:1fr}.dash-welcome{align-items:flex-start;flex-direction:column}.metric-grid{grid-template-columns:1fr 1fr}.metric:last-child{grid-column:span 2}.workspace-side{grid-template-columns:1fr}.sidebar-link{justify-content:center}.sidebar-link span{font-size:9px}.sidebar-controls button,.sidebar-controls select{padding:6px;font-size:9px}}
+/* The white theme remains the default; dark mode uses the same layout. */
+body[data-theme="light"]{background:#f4f4f4!important;color:#111!important}
+body[data-theme="light"] .site-brand:before{color:#111}
+body[data-theme="light"] .landing-hero h1,body[data-theme="light"] .section-head h2,body[data-theme="light"] .how-section h2,body[data-theme="light"] .landing-callout h2{color:#111}
+body[data-theme="light"] .hero-copy>p,body[data-theme="light"] .hero-trust,body[data-theme="light"] .section-head>p,body[data-theme="light"] .how-grid p,body[data-theme="light"] .feature-grid p,body[data-theme="light"] .payments-section p,body[data-theme="light"] .payments-section li,body[data-theme="light"] .faq-section details p{color:#333}
+body[data-theme="light"] .orbit-card,body[data-theme="light"] .glass-card,body[data-theme="light"] .how-grid article,body[data-theme="light"] .feature-grid article,body[data-theme="light"] .metric,body[data-theme="light"] .room-summary article,body[data-theme="light"] .deal-card,body[data-theme="light"] .message,body[data-theme="light"] .payment-card,body[data-theme="light"] .proof-strip,body[data-theme="light"] .landing-callout,body[data-theme="light"] .auth-card{background:#fff!important;color:#111!important;border-color:#aaa!important}
+body[data-theme="light"] .orbit-card h3,body[data-theme="light"] .glass-card h2,body[data-theme="light"] .metric strong,body[data-theme="light"] .deal-card h3,body[data-theme="light"] .feature-grid b,body[data-theme="light"] .payment-card b,body[data-theme="light"] .auth-card h1{color:#111}
+body[data-theme="light"] .orbit-card>p,body[data-theme="light"] .orbit-note small,body[data-theme="light"] .room-preview-rows small,body[data-theme="light"] .dash-welcome p,body[data-theme="light"] .metric span,body[data-theme="light"] .deal-card>p,body[data-theme="light"] .glass-card>p{color:#444}
+body[data-theme="light"] .orbit-note,body[data-theme="light"] .room-preview-rows>div,body[data-theme="light"] .empty-state,body[data-theme="light"] .invite-box{background:#f3f3f3;color:#222;border-color:#bbb}
+body[data-theme="light"] .float-code,body[data-theme="light"] .float-lock{background:#fff;color:#111;border-color:#999}
+body[data-theme="light"] .site-header{background:#fff;border-color:#aaa}body[data-theme="light"] .site-header nav a{color:#222}
+body[data-theme="light"] .sidebar-controls button,body[data-theme="light"] .sidebar-controls select{background:#171717;color:#fff;border-color:#666}
+body[data-theme="light"] .stack-form label{color:#222}body[data-theme="light"] .stack-form input,body[data-theme="light"] .stack-form textarea,body[data-theme="light"] .stack-form select,body[data-theme="light"] .auth-form input{background:#fff!important;color:#111!important;border-color:#888!important}
+body[data-theme="light"] .form-note,body[data-theme="light"] .empty-state,body[data-theme="light"] .portal-footer{color:#444!important}
+body[data-theme="light"] .how-grid article>span,body[data-theme="light"] .deal-code,body[data-theme="light"] .code-chip,body[data-theme="light"] .room-code strong{color:#111!important}
+body[data-theme="light"] .landing-footnote{color:#333}
