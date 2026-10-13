@@ -118,5 +118,5 @@ app.use('/assets',express.static(path.join(__dirname,'public','assets'),{immutab
 app.use((req,res,next)=>{if(req.path.endsWith('.php')||req.path==='/app-loader.php')return res.status(404).send('This PHP route is retired. Use the Node.js route.');next();});
 app.use((err,req,res,next)=>{console.error(err);res.status(500).send('A server error occurred. Please try again later.');});
 
-async function start(){await mongoose.connect(process.env.MONGODB_URI||'mongodb://127.0.0.1:27017/xwadda');if(process.env.ADMIN_EMAIL){await User.updateOne({email:process.env.ADMIN_EMAIL.toLowerCase()},{role:'admin'},{runValidators:true});}app.listen(port,'127.0.0.1',()=>console.log(`XWADDA listening on 127.0.0.1:${port}`));}
+async function start(){await mongoose.connect(process.env.MONGODB_URI||'mongodb://127.0.0.1:27017/xwadda');if(process.env.ADMIN_EMAIL){await User.updateOne({email:process.env.ADMIN_EMAIL.toLowerCase()},{role:'admin'},{runValidators:true});}app.listen(port,'0.0.0.0',()=>console.log(`XWADDA listening on 0.0.0.0:${port}`));}
 start().catch(e=>{console.error('Startup failed:',e.message);process.exit(1);});
