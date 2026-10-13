@@ -24,6 +24,8 @@ To enable Google sign-in, set `GOOGLE_CLIENT_ID` in Coolify's **Production** env
 
 The app defaults to automatic secure-cookie detection. If you are temporarily testing on the HTTP-only Coolify `sslip.io` link and sign-in succeeds but does not stay signed in, set `COOKIE_SECURE=false`. Once the site has HTTPS, set `COOKIE_SECURE=true` (or remove the variable to use automatic detection). Do not leave secure cookies disabled on a public HTTPS site.
 
+The app listens on port 3000 while MongoDB connects and retries, so a database outage no longer prevents the HTTP server from binding. `/health` reports `503` until MongoDB is ready; the dashboard also shows a clear temporary database message. A **502 Bad Gateway** after this update points to a build/startup/port problem; inspect Coolify's **Deployment Logs** and **Runtime Logs**. If logs show `MongoServerSelectionError`, `ECONNREFUSED`, or a timeout, check that `MONGODB_URI` points to the running MongoDB resource's internal network hostname and credentials—not `localhost`, `127.0.0.1`, or an external app's URI. The app retries and logs a specific MongoDB connection hint.
+
 ## Shared-room flow
 
 1. Sign in and create a room as buyer, seller, or third party. XWADDA generates the five-character code.
