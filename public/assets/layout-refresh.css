@@ -168,3 +168,74 @@ body[data-theme="dark"] .seller-review-state{background:#171717;color:#fff;borde
 @keyframes xw-spin{to{transform:rotate(360deg)}}
 html[data-theme=dark] .wallet-panel,html[data-theme=dark] .payment-panel,body.dark-mode .wallet-panel,body.dark-mode .payment-panel{--surface:#151515;--surface-soft:#202020;--ink:#f5f5f5;--muted:#c1c1c1;--line:#555;--accent:#8197ff;color:var(--ink)}
 @media(max-width:640px){.form-pair{grid-template-columns:1fr}.payment-total{align-items:flex-start;flex-direction:column}.wallet-clear-row{display:grid;grid-template-columns:1fr 1fr}.payment-method-card{padding:15px}}
+
+/* Light mode is complete across the standalone account, support and operations pages. */
+body[data-theme="light"] .support-ticket,
+body[data-theme="light"] .support-message,
+body[data-theme="light"] .admin-record,
+body[data-theme="light"] .admin-stat,
+body[data-theme="light"] .admin-section,
+body[data-theme="light"] .admin-nav,
+body[data-theme="light"] .admin-upload,
+body[data-theme="light"] .admin-add-form,
+body[data-theme="light"] .admin-table,
+body[data-theme="light"] .admin-table-wrap,
+body[data-theme="light"] .market-category-card,
+body[data-theme="light"] .insight-card,
+body[data-theme="light"] .seller-listing,
+body[data-theme="light"] .safety-count,
+body[data-theme="light"] .payment-method-card,
+body[data-theme="light"] .support-page .panel-light,
+body[data-theme="light"] .simple-page,
+body[data-theme="light"] .auth-card {
+  background:#fff!important;
+  color:#111!important;
+  border-color:#b7b7b7!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.06)!important;
+}
+body[data-theme="light"] .support-ticket h1,
+body[data-theme="light"] .support-ticket h2,
+body[data-theme="light"] .support-ticket h3,
+body[data-theme="light"] .support-message b,
+body[data-theme="light"] .admin-record b,
+body[data-theme="light"] .admin-stat b,
+body[data-theme="light"] .admin-section h2,
+body[data-theme="light"] .admin-upload h3,
+body[data-theme="light"] .admin-add-form h3,
+body[data-theme="light"] .insights-page h1,
+body[data-theme="light"] .insights-page h2,
+body[data-theme="light"] .insights-page h3,
+body[data-theme="light"] .simple-page h1,
+body[data-theme="light"] .simple-page h2,
+body[data-theme="light"] .auth-card h1 {color:#111!important}
+body[data-theme="light"] .support-ticket p,
+body[data-theme="light"] .support-ticket small,
+body[data-theme="light"] .support-message p,
+body[data-theme="light"] .support-message small,
+body[data-theme="light"] .admin-record small,
+body[data-theme="light"] .admin-record-meta,
+body[data-theme="light"] .admin-section p,
+body[data-theme="light"] .admin-upload p,
+body[data-theme="light"] .subhead,
+body[data-theme="light"] .ticket-state,
+body[data-theme="light"] .admin-empty,
+body[data-theme="light"] .admin-stat span,
+body[data-theme="light"] .site-copyright {color:#444!important}
+body[data-theme="light"] .support-message,
+body[data-theme="light"] .admin-table th,
+body[data-theme="light"] .admin-nav a,
+body[data-theme="light"] .admin-record-meta span,
+body[data-theme="light"] .admin-stat {border-color:#c5c5c5!important}
+body[data-theme="light"] .admin-table th,
+body[data-theme="light"] .support-message.from-support {background:#f2f2f2!important}
+body[data-theme="light"] .support-ticket textarea,
+body[data-theme="light"] .support-ticket input,
+body[data-theme="light"] .admin-record input,
+body[data-theme="light"] .admin-record textarea,
+body[data-theme="light"] .admin-record select,
+body[data-theme="light"] .admin-filter select,
+body[data-theme="light"] .admin-inline-form select {background:#fff!important;color:#111!important;border-color:#888!important}
+body[data-theme="light"] .admin-nav a {background:#f3f3f3!important;color:#111!important}
+body[data-theme="light"] .admin-nav a:hover {background:#111!important;color:#fff!important}
+body[data-theme="light"] .site-header .site-controls button,
+body[data-theme="light"] .site-header .site-controls select {background:#fff!important;color:#111!important;border-color:#777!important}
