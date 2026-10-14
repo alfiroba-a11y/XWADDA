@@ -126,7 +126,7 @@ function decryptPrivate(value) { if(!value)return ''; const [version,iv,tag,data
 function maskPrivate(value) { const s=String(value||''); return s ? `${'•'.repeat(Math.max(4,s.length-4))}${s.slice(-4)}` : 'Not saved'; }
 function render(title, body, req) {
   const user = req.session.user;
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111"><title>${escapeHtml(title)} · XWADDA.KE</title><link rel="stylesheet" href="/assets/portal.css?v=xw-20261014h"><style>body{background:#f5f5f5;color:#151515}.simple-page{max-width:850px;margin:48px auto;padding:28px;background:#fff;border:1px solid #ddd;border-radius:14px}.simple-page h1,.simple-page h2{color:#111}.simple-page label{display:block;margin:12px 0;font-size:14px}.simple-page input,.simple-page textarea,.simple-page select{display:block;width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;margin-top:5px}.simple-page .row{display:flex;gap:14px}.simple-page .row>*{flex:1}.notice{padding:12px;background:#f0f0f0;border-left:3px solid #111;margin:12px 0}.list{border-top:1px solid #ddd;padding:14px 0}.site-copyright{text-align:center;padding:26px;color:#555}</style><link rel="stylesheet" href="/assets/preferences.css?v=xw-20261014h"><link rel="stylesheet" href="/assets/layout-refresh.css?v=xw-20261014h"></head><body class="${title === "Your dashboard" ? "authenticated-shell" : ""} ${title.toLowerCase().includes("operations") ? "admin-shell" : ""}"><header class="site-header"><a class="site-brand" href="/"><img src="/assets/xw-logo.png?v=xw-20261014h" alt=""><span>WADDA<small>.KE</small></span></a><nav><a href="/my-deals">My deals</a>${user?' · <a href="/wallet">Wallet</a>':''}${isConfiguredAdmin(user)?' · <a href="/admin">XWADDA Operations</a>':''} · ${user?`<span>${escapeHtml(user.name)}</span> · <form method="post" action="/logout" style="display:inline"><input type="hidden" name="csrf" value="${escapeHtml(req.csrfToken || "")}"><button type="submit">Sign out</button></form>`:'<a href="/signin">Sign in</a> · <a href="/signup">Create account</a> · <a href="/contact">Support</a>'}</nav><div class="site-controls"><button type="button" data-theme-toggle>Dark mode</button><select data-language aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="ar">العربية</option></select></div></header><div class="page-body">${body}</div><a class="support-fab" href="/support" aria-label="Chat with XWADDA support"><img src="/assets/support-agent.svg" alt=""><span class="active-dot" aria-label="Online"></span><span class="support-tip">Chat with support</span></a><footer class="site-copyright">© ${new Date().getUTCFullYear()} XWADDA.KE. All rights reserved. · <a href="/contact">Contact support</a></footer><script defer src="/assets/preferences.js?v=xw-20261014h"></script><script defer src="/assets/navigation.js?v=xw-20261014h"></script></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111"><title>${escapeHtml(title)} · XWADDA.KE</title><link rel="stylesheet" href="/assets/portal.css?v=xw-20261014i"><style>body{background:#f5f5f5;color:#151515}.simple-page{max-width:850px;margin:48px auto;padding:28px;background:#fff;border:1px solid #ddd;border-radius:14px}.simple-page h1,.simple-page h2{color:#111}.simple-page label{display:block;margin:12px 0;font-size:14px}.simple-page input,.simple-page textarea,.simple-page select{display:block;width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;margin-top:5px}.simple-page .row{display:flex;gap:14px}.simple-page .row>*{flex:1}.notice{padding:12px;background:#f0f0f0;border-left:3px solid #111;margin:12px 0}.list{border-top:1px solid #ddd;padding:14px 0}.site-copyright{text-align:center;padding:26px;color:#555}</style><link rel="stylesheet" href="/assets/preferences.css?v=xw-20261014i"><link rel="stylesheet" href="/assets/layout-refresh.css?v=xw-20261014i"></head><body class="${title === "Your dashboard" ? "authenticated-shell" : ""} ${title.toLowerCase().includes("operations") ? "admin-shell" : ""}"><header class="site-header"><a class="site-brand" href="/"><img src="/assets/xw-logo.png?v=xw-20261014i" alt=""><span>WADDA<small>.KE</small></span></a><nav><a href="/my-deals">My deals</a>${user?' · <a href="/wallet">Wallet</a>':''}${isConfiguredAdmin(user)?' · <a href="/admin">XWADDA Operations</a>':''} · ${user?`<span>${escapeHtml(user.name)}</span> · <form method="post" action="/logout" style="display:inline"><input type="hidden" name="csrf" value="${escapeHtml(req.csrfToken || "")}"><button type="submit">Sign out</button></form>`:'<a href="/signin">Sign in</a> · <a href="/signup">Create account</a> · <a href="/contact">Support</a>'}</nav><div class="site-controls"><button type="button" data-theme-toggle>Dark mode</button><select data-language aria-label="Language"><option value="en">English</option><option value="fil">Filipino</option><option value="ar">العربية</option></select></div></header><div class="page-body">${body}</div><a class="support-fab" href="/support" aria-label="Chat with XWADDA support"><img src="/assets/support-agent.svg" alt=""><span class="active-dot" aria-label="Online"></span><span class="support-tip">Chat with support</span></a><footer class="site-copyright">© ${new Date().getUTCFullYear()} XWADDA.KE. All rights reserved. · <a href="/contact">Contact support</a></footer><script defer src="/assets/preferences.js?v=xw-20261014i"></script><script defer src="/assets/navigation.js?v=xw-20261014i"></script></body></html>`;
 }
 function parseCsv(text) {
   const rows=[]; let row=[], field='', quoted=false;
@@ -276,40 +276,49 @@ app.get('/deal/:code/receipt.pdf',signedIn,async(req,res)=>{
   res.status(200).set('Content-Type','application/pdf').set('Content-Disposition',`attachment; filename="${filename}"`);
   const doc=new PDFDocument({size:'A4',margin:48,info:{Title:`XWADDA deal receipt ${receiptNo}`,Author:'XWADDA',Subject:'Shared deal transaction record'}});
   doc.pipe(res);
-  const width=doc.page.width-doc.page.margins.left-doc.page.margins.right;
+  const margin=doc.page.margins.left,width=doc.page.width-margin-doc.page.margins.right,gap=24,colWidth=(width-gap)/2;
   const clean=(value)=>String(value??'—').replace(/[\u0000-\u001f]/g,' ').replace(/\s+/g,' ').trim();
-  const heading=(text)=>{doc.moveDown(.7).font('Helvetica-Bold').fontSize(12).fillColor('#16191e').text(clean(text),{width});doc.moveTo(doc.page.margins.left,doc.y+4).lineTo(doc.page.width-doc.page.margins.right,doc.y+4).lineWidth(.6).strokeColor('#a8abb1').stroke();doc.moveDown(.6)};
-  const field=(label,value)=>{doc.font('Helvetica').fontSize(9).fillColor('#555b65').text(clean(label).toUpperCase(),{width});doc.moveDown(.12).font('Helvetica-Bold').fontSize(11).fillColor('#16191e').text(clean(value),{width});doc.moveDown(.5)};
+  const drawSection=(title,x,y,w)=>{doc.font('Helvetica-Bold').fontSize(12).fillColor('#16191e').text(title,x,y,{width:w});const yy=doc.y+4;doc.moveTo(x,yy).lineTo(x+w,yy).lineWidth(.6).strokeColor('#a8abb1').stroke();return yy+12};
+  const drawField=(label,value,x,y,w)=>{doc.font('Helvetica-Bold').fontSize(8).fillColor('#626873').text(clean(label).toUpperCase(),x,y,{width:w});y=doc.y+2;doc.font('Helvetica').fontSize(10).fillColor('#16191e').text(clean(value),x,y,{width:w,lineGap:1});return doc.y+9};
   doc.font('Helvetica-Bold').fontSize(23).fillColor('#111').text('XWADDA.KE',{width:width*.65});
   doc.font('Helvetica').fontSize(9).fillColor('#555').text('SHARED DEAL ROOM  |  TRANSACTION RECORD');
-  doc.font('Helvetica-Bold').fontSize(12).fillColor('#111').text(`Receipt ${receiptNo}`,{align:'right',width});
-  doc.moveDown(.5).moveTo(doc.page.margins.left,doc.y).lineTo(doc.page.width-doc.page.margins.right,doc.y).lineWidth(1.2).strokeColor('#111').stroke();
-  doc.moveDown(.6);field('Recorded status',roomStatusLabel(deal.status));
-  field('Deal title',deal.title);field('Room code',deal.code||'—');field('Agreed amount',money(deal.currency,deal.amountMinor));field('Escrow fee',money(deal.currency,deal.feeMinor));
-  field('Buyer',deal.buyerName||'Not joined');field('Seller',deal.sellerName||'Not joined');field('Third party',deal.thirdPartyName||'Not joined');field('Fourth party · Support',deal.supportName||'Not added');
-  field('Deal created',new Date(deal.createdAt).toLocaleString('en-KE'));field('Deposit confirmed',deal.depositedAt?new Date(deal.depositedAt).toLocaleString('en-KE'):'Not recorded');field('Release recorded',deal.releasedAt?new Date(deal.releasedAt).toLocaleString('en-KE'):'Not recorded');field('Refund recorded',deal.refundedAt?new Date(deal.refundedAt).toLocaleString('en-KE'):'Not recorded');
-  heading('Payment records');
-  if(!intents.length)doc.font('Helvetica').fontSize(10).fillColor('#333').text('No payment attempt is recorded for this deal.',{width});
-  for(const item of intents){
-    const method=item.provider==='hashpay'?'M-Pesa':item.provider==='crypto'?`USDT ${item.network||''}`:item.provider;
-    doc.font('Helvetica-Bold').fontSize(10).fillColor('#17191d').text(`${method} | ${item.status}`,{width});
-    doc.font('Helvetica').fontSize(9).fillColor('#333').text(`Started: ${new Date(item.createdAt).toLocaleString('en-KE')}\nReference: ${clean(item.providerReference)}\nTransaction record: ${clean(item.providerReceipt||item.providerTransactionId||'Not recorded')}`,{width});doc.moveDown(.55);
-  }
-  heading('Agreed terms');doc.font('Helvetica').fontSize(10).fillColor('#222').text(clean(deal.terms),{width,lineGap:3});
-  const stampSize=132,stampX=doc.page.width-doc.page.margins.right-stampSize,stampY=doc.y+24;
-  if(stampY+stampSize>doc.page.height-doc.page.margins.bottom)doc.addPage();
-  const sx=doc.page.width-doc.page.margins.right-stampSize,sy=doc.y+24,cx=sx+stampSize/2,cy=sy+stampSize/2;
+  doc.font('Helvetica-Bold').fontSize(12).fillColor('#111').text(`Receipt ${receiptNo}`,margin,doc.y-12,{align:'right',width});
+  doc.moveDown(.7).moveTo(margin,doc.y).lineTo(doc.page.width-doc.page.margins.right,doc.y).lineWidth(1.2).strokeColor('#111').stroke();
+  const top=doc.y+16,leftX=margin,rightX=margin+colWidth+gap;
+  let leftY=drawSection('ESCROW DETAILS',leftX,top,colWidth);
+  leftY=drawField('Status',roomStatusLabel(deal.status),leftX,leftY,colWidth);
+  leftY=drawField('Deal title',deal.title,leftX,leftY,colWidth);
+  leftY=drawField('Room code',deal.code||'—',leftX,leftY,colWidth);
+  leftY=drawField('Agreed amount',money(deal.currency,deal.amountMinor),leftX,leftY,colWidth);
+  leftY=drawField('Escrow fee',money(deal.currency,deal.feeMinor),leftX,leftY,colWidth);
+  leftY=drawField('Buyer',deal.buyerName||'Not joined',leftX,leftY,colWidth);
+  leftY=drawField('Seller',deal.sellerName||'Not joined',leftX,leftY,colWidth);
+  leftY=drawField('Third party',deal.thirdPartyName||'Not joined',leftX,leftY,colWidth);
+  leftY=drawField('Support',deal.supportName||'Not added',leftX,leftY,colWidth);
+  leftY=drawField('Deal created',new Date(deal.createdAt).toLocaleString('en-KE'),leftX,leftY,colWidth);
+  leftY=drawField('Deposit confirmed',deal.depositedAt?new Date(deal.depositedAt).toLocaleString('en-KE'):'Not recorded',leftX,leftY,colWidth);
+  leftY=drawField('Release recorded',deal.releasedAt?new Date(deal.releasedAt).toLocaleString('en-KE'):'Not recorded',leftX,leftY,colWidth);
+  leftY=drawField('Refund recorded',deal.refundedAt?new Date(deal.refundedAt).toLocaleString('en-KE'):'Not recorded',leftX,leftY,colWidth);
+
+  // The dated seal sits beside the escrow fields at the same visual level, not as a footer.
+  const stampSize=118,sx=rightX+(colWidth-stampSize)/2,sy=top+20,cx=sx+stampSize/2,cy=sy+stampSize/2;
   doc.circle(cx,cy,stampSize/2-2).lineWidth(2).strokeColor('#17191d').stroke();doc.circle(cx,cy,stampSize/2-8).lineWidth(.7).strokeColor('#17191d').stroke();
-  doc.font('Helvetica-Bold').fontSize(10).fillColor('#17191d').text('XWADDA',sx+12,sy+19,{width:stampSize-24,align:'center'});
-  doc.font('Helvetica').fontSize(7).text('DEAL RECORD',sx+12,sy+33,{width:stampSize-24,align:'center'});
+  doc.font('Helvetica-Bold').fontSize(10).fillColor('#17191d').text('XWADDA',sx+10,sy+16,{width:stampSize-20,align:'center'});
+  doc.font('Helvetica').fontSize(7).text('DEAL RECORD',sx+10,sy+29,{width:stampSize-20,align:'center'});
   const star=(x,y,r)=>{for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.43:r,px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;if(i===0)doc.moveTo(px,py);else doc.lineTo(px,py)}doc.closePath().fill('#17191d')};
-  for(let i=0;i<5;i++)star(cx-32+i*16,sy+51,5.5);
-  doc.save().lineWidth(1.6).strokeColor('#17191d').moveTo(sx+25,sy+78).bezierCurveTo(sx+35,sy+57,sx+40,sy+96,sx+51,sy+75).bezierCurveTo(sx+60,sy+61,sx+63,sy+91,sx+76,sy+75).bezierCurveTo(sx+84,sy+65,sx+89,sy+83,sx+105,sy+73).stroke().restore();
-  doc.font('Helvetica').fontSize(6.5).fillColor('#17191d').text('DIGITAL RECORD',sx+10,sy+97,{width:stampSize-20,align:'center'});
-  doc.font('Helvetica-Bold').fontSize(7.5).text(stampDate,sx+10,sy+109,{width:stampSize-20,align:'center'});
-  doc.moveDown(11).moveTo(doc.page.margins.left,doc.y).lineTo(doc.page.width-doc.page.margins.right,doc.y).lineWidth(.5).strokeColor('#999').stroke();doc.moveDown(.5);
-  doc.font('Helvetica-Bold').fontSize(8).fillColor('#333').text('XWADDA generated record',{width});
-  doc.font('Helvetica').fontSize(8).fillColor('#555').text(`This PDF reflects deal and payment information recorded by XWADDA as of ${new Date().toLocaleString('en-KE')}. It is a platform transaction record and does not replace a receipt issued by a payment network. Statuses are shown only when the matching event is recorded in the deal.`,{width,lineGap:2});
+  for(let i=0;i<5;i++)star(cx-30+i*15,sy+46,5);
+  doc.save().lineWidth(1.5).strokeColor('#17191d').moveTo(sx+22,sy+70).bezierCurveTo(sx+32,sy+52,sx+38,sy+88,sx+49,sy+68).bezierCurveTo(sx+58,sy+55,sx+64,sy+84,sx+75,sy+68).bezierCurveTo(sx+84,sy+59,sx+89,sy+77,sx+97,sy+67).stroke().restore();
+  doc.font('Helvetica').fontSize(6).fillColor('#17191d').text('DIGITAL RECORD',sx+8,sy+86,{width:stampSize-16,align:'center'});
+  doc.font('Helvetica-Bold').fontSize(7).text(stampDate,sx+8,sy+98,{width:stampSize-16,align:'center'});
+  let rightY=drawSection('PAYMENT RECORDS',rightX,sy+stampSize+14,colWidth);
+  if(!intents.length){doc.font('Helvetica').fontSize(9).fillColor('#333').text('No payment attempt is recorded for this deal.',rightX,rightY,{width:colWidth,lineGap:2});rightY=doc.y+8;}
+  for(const item of intents){const method=item.provider==='hashpay'?'M-Pesa':item.provider==='crypto'?`USDT ${item.network||''}`:item.provider;doc.font('Helvetica-Bold').fontSize(9).fillColor('#17191d').text(`${method} | ${item.status}`,rightX,rightY,{width:colWidth});rightY=doc.y+2;doc.font('Helvetica').fontSize(8).fillColor('#333').text(`Started: ${new Date(item.createdAt).toLocaleString('en-KE')}\nReference: ${clean(item.providerReference)}\nTransaction record: ${clean(item.providerReceipt||item.providerTransactionId||'Not recorded')}`,rightX,rightY,{width:colWidth,lineGap:1});rightY=doc.y+8;}
+  rightY=drawSection('AGREED TERMS',rightX,rightY+4,colWidth);
+  doc.font('Helvetica').fontSize(9).fillColor('#222').text(clean(deal.terms),rightX,rightY,{width:colWidth,lineGap:2});
+  const footerY=Math.max(leftY,doc.y)+20;
+  doc.moveTo(margin,footerY).lineTo(doc.page.width-doc.page.margins.right,footerY).lineWidth(.5).strokeColor('#999').stroke();
+  doc.font('Helvetica-Bold').fontSize(8).fillColor('#333').text('XWADDA generated record',margin,footerY+8,{width});
+  doc.font('Helvetica').fontSize(8).fillColor('#555').text(`This PDF reflects deal and payment information recorded by XWADDA as of ${new Date().toLocaleString('en-KE')}. It is a platform transaction record and does not replace a receipt issued by a payment network. Statuses are shown only when the matching event is recorded in the deal.`,margin,footerY+20,{width,lineGap:2});
   doc.end();
 });
 app.post('/room/:code/messages',signedIn,checkCsrf,async(req,res)=>{const deal=await Deal.findOne({code:String(req.params.code||'').toUpperCase()});const role=deal&&(roomRole(deal,req.session.user.id)||(isConfiguredAdmin(req.session.user)?'admin':null)),body=String(req.body.body||'').trim();if(!deal||!role)return res.status(404).send('Room not found.');if(!body||body.length>2000)return res.status(422).send('Enter a message of 1 to 2,000 characters.');await RoomMessage.create({dealId:deal._id,userId:req.session.user.id,name:['support','admin'].includes(role)?'XWADDA SUPPORT':req.session.user.name,role,kind:'message',body});await Deal.updateOne({_id:deal._id},{$set:{updatedAt:new Date()}});res.redirect(`/deal/${deal.code}#activity`);});
