@@ -244,7 +244,10 @@ body[data-theme="light"] .site-header .site-controls select {background:#fff!imp
 html,body {height:auto!important;min-height:100%;overflow-y:auto!important}
 .site-header,.authenticated-shell .dash-welcome,.app-sidebar {position:static!important;top:auto!important}
 .app-sidebar {height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;transform:none!important;visibility:visible!important}
-.support-fab {position:static!important;inset:auto!important;display:grid!important;margin:16px 24px 12px auto!important;float:none!important}
+.support-fab {position:fixed!important;right:22px!important;bottom:22px!important;top:auto!important;left:auto!important;inset:auto 22px 22px auto!important;z-index:90!important;display:grid!important;margin:0!important;float:none!important}
+.site-brand>span,.sidebar-brand>span {margin-left:12px!important;white-space:nowrap!important}
+.status-completed,.state-pill.status-completed,.room-status.status-completed {background:#fff!important;color:#16803c!important;border:1px solid #16803c!important;box-shadow:none!important}
+.status-cancelled,.state-pill.status-cancelled,.room-status.status-cancelled {background:transparent!important;color:#c52222!important;border-color:transparent!important;box-shadow:none!important}
 .deposit-address-row {display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0;padding:12px;border:1px solid var(--line,#888);border-radius:8px;background:var(--surface-soft,#f2f2f2)}
 .deposit-address-row code {display:block;flex:1 1 250px;min-width:0;overflow-wrap:anywhere;color:var(--ink,#111);font-size:12px}
 .deposit-address-row button {flex:0 0 auto}
@@ -255,3 +258,24 @@ html,body {height:auto!important;min-height:100%;overflow-y:auto!important}
   .app-sidebar .sidebar-bottom {margin-top:12px!important}
   .support-fab {margin-right:14px!important}
 }
+
+/* Keep the live indicator attached to the support control across themes and breakpoints. */
+.support-fab {position:fixed!important;inset:auto 22px 22px auto!important;z-index:100!important;margin:0!important}
+.support-fab>.active-dot {position:absolute!important;inset:2px 2px auto auto!important;z-index:2!important;transform:none!important}
+@media(max-width:760px) {.support-fab {inset:auto 14px 14px auto!important;margin:0!important}}
+
+/* Deal status labels stay legible without dark badge fills. */
+.deal-card .state-pill.status-completed,
+.room-hero .room-status.status-completed,
+.room-summary .status-completed,
+.status-completed.state-pill {background:#fff!important;background-image:none!important;color:#16803c!important;border:1px solid #16803c!important;box-shadow:none!important}
+.deal-card .state-pill.status-cancelled,
+.room-hero .room-status.status-cancelled,
+.room-summary .status-cancelled,
+.status-cancelled.state-pill {background:transparent!important;background-color:transparent!important;background-image:none!important;color:#c52222!important;border:0!important;box-shadow:none!important}
+body[data-theme="dark"] .deal-card .state-pill.status-completed,
+body[data-theme="dark"] .room-hero .room-status.status-completed,
+body[data-theme="dark"] .room-summary .status-completed {background:#fff!important;color:#16803c!important}
+body[data-theme="dark"] .deal-card .state-pill.status-cancelled,
+body[data-theme="dark"] .room-hero .room-status.status-cancelled,
+body[data-theme="dark"] .room-summary .status-cancelled {background:transparent!important;color:#c52222!important}
