@@ -53,3 +53,9 @@ If SMTP is not configured, signup creates and verifies the account directly so t
 # USDT kiosk payments
 
 The kiosk reuses the escrow payment setup: M-Pesa checkout uses the existing M-Pesa account and webhook settings, while TRC20 and BEP20 deposits use the same `TRC20_ADDRESS` and `BEP20_ADDRESS` values and QR assets as escrow checkout. No separate kiosk payment destination values are required. When buying USDT, members can select TRC20/BEP20 wallet payout or provide a Binance ID, Bitget UID, or Bybit account ID. When selling USDT, they select the escrow deposit network and use the M-Pesa number saved under Wallet & payouts for KES payout. The kiosk loads current USDT/KES reference quotes from the public P2P quote endpoint, refreshes its cache every minute, and stores a signed quote with each order. An unavailable quote pauses new orders rather than substituting a stored rate. The rate is indicative and may differ from another payment method or an individual counterparty's price.
+
+## Google sign-in and phone installation
+
+For Google sign-in, set `GOOGLE_CLIENT_ID` to the OAuth **Web application** client ID in the deployment environment. In Google Cloud, add the site's exact HTTPS origin to **Authorized JavaScript origins** (scheme and hostname, without a path); add `http://localhost:3000` for local development if needed. A Google client secret is not used for this credential flow. After changing the environment variable, redeploy or restart the app. The sign-in page displays a setup note while the client ID is absent.
+
+The site includes a web app manifest, 192 px and 512 px install icons, and a root-scoped service worker. Serve it over HTTPS for browser installation and service-worker support. Members can use the page's **Install app** button where supported or the browser's **Add to Home Screen** menu. The service worker caches only static assets and an offline notice; it does not cache signed-in pages or deal data.
