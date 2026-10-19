@@ -1,0 +1,31 @@
+/* Distinct XWADDA portal treatment: paper, ink and a restrained signal blue. */
+body[data-theme="light"]{--xw-ink:#111318;--xw-muted:#667085;--xw-surface:#fff;--xw-page:#f4f5f7;--xw-line:#dfe2e8;--xw-menu:#f9fafb;--xw-menu-active:#e9edff;--xw-accent:#3157df;--xw-accent-ink:#fff}
+body[data-theme="dark"]{--xw-ink:#f4f5f7;--xw-muted:#a6adbb;--xw-surface:#17191f;--xw-page:#0e1015;--xw-line:#30343d;--xw-menu:#14161b;--xw-menu-active:#252b3c;--xw-accent:#8da3ff;--xw-accent-ink:#111318}
+body[data-theme]{background:var(--xw-page);color:var(--xw-ink)}
+body[data-theme] .app-sidebar{background:var(--xw-menu);color:var(--xw-ink);border-right:1px solid var(--xw-line);box-shadow:none}
+body[data-theme] .sidebar-link{display:flex;align-items:center;gap:13px;width:100%;min-height:48px;padding:10px 13px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--xw-ink);font-weight:650;text-align:left;transition:background .16s,border-color .16s,transform .16s}
+body[data-theme] .sidebar-link:hover{background:var(--xw-surface);border-color:var(--xw-line);transform:translateX(2px)}
+body[data-theme] .sidebar-link.active{background:var(--xw-menu-active);color:var(--xw-accent);border-color:transparent;box-shadow:inset 3px 0 var(--xw-accent)}
+.menu-icon{width:19px;height:19px;flex:0 0 19px;display:block}
+body[data-theme] .sidebar-label{color:var(--xw-muted);letter-spacing:.14em}
+body[data-theme] .sidebar-brand,body[data-theme] .sidebar-brand span{color:var(--xw-ink)}
+body[data-theme] .sidebar-bottom{border-top:1px solid var(--xw-line)}
+body[data-theme] .portal-content{background:var(--xw-page)}
+body[data-theme] .dash-welcome{background:transparent;border:0;box-shadow:none}
+body[data-theme] .metric,body[data-theme] .deal-card,body[data-theme] .glass-card,body[data-theme] .panel-light,body[data-theme] .insight-card{background:var(--xw-surface);color:var(--xw-ink);border-color:var(--xw-line);box-shadow:0 8px 24px #10152208}
+body[data-theme] .deal-card:hover{border-color:var(--xw-accent);transform:translateY(-2px)}
+body[data-theme] .button.primary{background:var(--xw-accent);color:var(--xw-accent-ink);border-color:var(--xw-accent)}
+body[data-theme] .button.secondary,body[data-theme] .button.ghost{background:var(--xw-surface);color:var(--xw-ink);border-color:var(--xw-line)}
+body[data-theme] .sidebar-toggle{display:inline-grid;place-items:center;width:40px;height:40px;border:1px solid var(--xw-line);border-radius:9px;background:var(--xw-surface);color:var(--xw-ink)}
+body[data-theme] .state-pill.status-completed,body[data-theme] .status-completed{color:#12834b;background:transparent;border-color:#12834b}
+body[data-theme] .state-pill.status-cancelled,body[data-theme] .status-cancelled{color:#c23838;background:transparent;border-color:#c23838}
+body[data-theme] .state-pill.status-funded,body[data-theme] .status-funded{color:#16834d}
+.escrow-live-strip{max-width:1240px;margin:0 auto;padding:20px 26px 22px;border:1px solid var(--line,#e4e7eb);border-radius:16px;background:var(--surface,#fff);box-shadow:0 16px 42px #1218260a}
+.escrow-live-heading{display:flex;justify-content:space-between;align-items:center;gap:15px}.escrow-live-heading .eyebrow{display:flex;align-items:center;gap:9px}.escrow-live-heading .eyebrow i{width:8px;height:8px;border-radius:50%;background:#238456;box-shadow:0 0 0 4px #23845618}.escrow-live-heading small{color:#737b89;font-size:12px}
+.escrow-live-values{display:grid;grid-template-columns:1fr 1fr auto;align-items:end;gap:22px;margin-top:18px}.escrow-live-values article{padding:15px 17px;border-left:3px solid #3157df;background:#f5f6fa;border-radius:0 10px 10px 0}.escrow-live-values article small,.escrow-live-values article span{display:block;color:#707989;font-size:11px}.escrow-live-values article strong{display:block;font-size:clamp(22px,3vw,32px);letter-spacing:-.04em;color:#111318;margin:5px 0}.escrow-live-values article span b{color:#3157df}.escrow-live-values>p{max-width:220px;margin:0;color:#737b89;font-size:11px;line-height:1.5}
+body[data-theme="dark"] .escrow-live-strip{background:#17191f;border-color:#30343d}body[data-theme="dark"] .escrow-live-values article{background:#20232b;border-left-color:#8da3ff}body[data-theme="dark"] .escrow-live-values article strong{color:#f4f5f7}body[data-theme="dark"] .escrow-live-values article span b{color:#a8b7ff}
+.scam-result{margin-top:16px;padding:17px;border:1px solid var(--line,#dfe2e8);border-left:4px solid #8c929d;border-radius:10px;background:var(--surface,#fff)}.scam-result.has-match{border-left-color:#c43b3b}.scam-result.no-match{border-left-color:#248052}.scam-result h2{margin:5px 0}.scam-result article{padding:11px 0;border-top:1px solid var(--line,#dfe2e8)}.scam-result article p{margin:6px 0}.scam-result small{color:var(--muted,#667085)}
+body[data-theme="dark"] .scam-result{background:var(--xw-surface);border-color:var(--xw-line)}
+.payment-number{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border:1px solid var(--xw-line,#dfe2e8);border-radius:10px;background:var(--xw-page,#f4f5f7);font-size:20px;font-weight:750;letter-spacing:.04em}.payment-number small{display:block;color:var(--xw-muted);font-size:11px;font-weight:500;letter-spacing:0}.payment-number input{max-width:250px;padding:12px;border:1px solid var(--xw-line);border-radius:8px;background:var(--xw-surface);color:var(--xw-ink);font-size:18px}
+.payment-progress.is-active{display:flex!important;align-items:center;gap:13px;padding:15px;border:1px solid var(--xw-line);border-radius:10px;background:var(--xw-page)}.payment-spinner{width:22px;height:22px;border:2px solid #3157df3c;border-top-color:#3157df;border-radius:50%;animation:xw-spin .8s linear infinite}.payment-progress:not(.is-active) .payment-spinner{display:none}@keyframes xw-spin{to{transform:rotate(360deg)}}
+@media(max-width:680px){.escrow-live-strip{margin:0 16px;padding:17px}.escrow-live-values{grid-template-columns:1fr 1fr;gap:10px}.escrow-live-values>p{grid-column:1/-1;max-width:none}.escrow-live-values article{padding:12px}.escrow-live-values article strong{font-size:22px}.escrow-live-heading small{font-size:10px;text-align:right}.payment-number{align-items:flex-start;flex-direction:column}.payment-number input{width:100%;max-width:none}}
