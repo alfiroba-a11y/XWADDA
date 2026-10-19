@@ -83,7 +83,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     scamCount.textContent = '500';
   }
 
-  // Update KES and USDT amounts dynamically
+  // Update KES and USDT amounts dynamically every 4 minutes
   function updateBalances() {
     if (kesElement) {
       kesElement.textContent = `KES ${formatNumber(getRandomInt(500000, 700000))}`;
@@ -100,4 +100,4 @@ document.getElementById('year').textContent = new Date().getFullYear();
   window.setInterval(updateBalances, 4 * 60 * 1000);
 })();
 </script>
-<script defer src="/assets/deal-preview.js?v=xw-20261019c"></script><script defer src="/assets/landing-trust-stats.js?v=xw-20261019b"></script><script defer src="/assets/preferences.js?v=xw-20261019c"></script><script defer src="/assets/navigation.js?v=xw-20261014k"></script><script defer src="/assets/pwa-install.js?v=xw-20261014k"></script></body></html>
+<script defer src="/assets/deal-preview.js?v=xw-20261019c"></script><script defer src="/assets/preferences.js?v=xw-20261019c"></script><script defer src="/assets/navigation.js?v=xw-20261014k"></script><script defer src="/assets/pwa-install.js?v=xw-20261014k"></script></body></html>
