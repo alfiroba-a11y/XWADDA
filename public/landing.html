@@ -66,38 +66,5 @@ body[data-theme="dark"] .scam-watch-link:hover{background:#252b3c!important;bord
 <section class="kiosk-service-section" id="kiosk"><div class="section-head"><div><span class="eyebrow">USDT KIOSK · BUY AND SELL</span><h2>Buy or sell USDT with confidence.</h2></div><p>Place an order using the current USDT/KES rate and choose how you want to pay or receive funds.</p></div><div class="kiosk-service-grid"><article><span class="eyebrow">BUY USDT</span><h3>Pay with M-Pesa</h3><p>Choose a crypto wallet or supported exchange account to receive your USDT.</p></article><article><span class="eyebrow">SELL USDT</span><h3>Receive KES</h3><p>Choose TRC20 or BEP20 for your deposit and provide your M-Pesa payout number.</p></article></div><a class="button primary" href="/signup">Open the USDT kiosk <b>→</b></a></section>
 <section class="faq-section"><div class="section-head"><div><span class="eyebrow">COMMON QUESTIONS</span><h2>Before you start</h2></div></div><details><summary>How does escrow protect my deal?</summary><p>The buyer’s payment is held while the seller completes the agreed delivery. Both parties can follow the deal and raise an issue if needed.</p></details><details><summary>How do I pay?</summary><p>Available payment options are shown when you create or join a deal. The USDT kiosk supports M-Pesa and selected crypto networks.</p></details><details><summary>What if there is a problem?</summary><p>Contact support from the deal and share the relevant details so the issue can be reviewed.</p></details></section>
 <section class="landing-callout"><div><span class="eyebrow">START A DEAL</span><h2>Bring both sides together.</h2><p>Set the terms and invite the other participants to join.</p></div><a class="button primary" href="/signup">Create your account <b>→</b></a></section>
-</main><a class="support-fab" href="/signin" aria-label="Sign in to contact support"><img src="/assets/support-agent.svg" alt=""><span class="active-dot" aria-label="Online"></span><span class="support-tip">Sign in to chat with support</span></a><footer class="site-footer landing-footer"><span>© <span id="year"></span> XWADDA.KE</span><span><a href="/contact">Contact support</a> · <a href="/signin">Sign in</a> · <a href="/signup">Create account</a></span></footer>
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-
-(() => {
-  const kesElement = document.getElementById('held-kes');
-  const usdtElement = document.getElementById('held-usdt');
-  const scamCount = document.getElementById('verified-scam-count');
-
-  const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-  const formatNumber = (val) => new Intl.NumberFormat('en-KE').format(val);
-
-  // Set Scam Watch count permanently to 500
-  if (scamCount) {
-    scamCount.textContent = '500';
-  }
-
-  // Update KES and USDT amounts dynamically every 4 minutes
-  function updateBalances() {
-    if (kesElement) {
-      kesElement.textContent = `KES ${formatNumber(getRandomInt(500000, 700000))}`;
-    }
-    if (usdtElement) {
-      usdtElement.textContent = `${formatNumber(getRandomInt(3000, 6283))} USDT`;
-    }
-  }
-
-  // Run on initial load
-  updateBalances();
-
-  // Refresh KES and USDT every 4 minutes (4 * 60 * 1000 ms)
-  window.setInterval(updateBalances, 4 * 60 * 1000);
-})();
-</script>
-<script defer src="/assets/deal-preview.js?v=xw-20261019c"></script><script defer src="/assets/preferences.js?v=xw-20261019c"></script><script defer src="/assets/navigation.js?v=xw-20261014k"></script><script defer src="/assets/pwa-install.js?v=xw-20261014k"></script></body></html>
+</main><footer class="site-footer landing-footer"><span>© <span id="year"></span> XWADDA.KE</span><span><a href="/contact">Contact support</a> · <a href="/signin">Sign in</a> · <a href="/signup">Create account</a></span></footer><script>document.getElementById('year').textContent=new Date().getFullYear();(()=>{const fmt=(v,c)=>new Intl.NumberFormat('en-KE',{minimumFractionDigits:0,maximumFractionDigits:c==='KES'?0:2}).format(v);async function refresh(){try{const r=await fetch('/api/public/escrow-totals',{cache:'no-store'}),j=await r.json();if(!r.ok||!j.ok)throw Error();document.getElementById('held-kes').textContent='KES '+fmt(j.totals.KES.amount,'KES');document.getElementById('held-usdt').textContent=fmt(j.totals.USDT.amount,'USDT')+' USDT'}catch{document.getElementById('held-kes').textContent='Unavailable';document.getElementById('held-usdt').textContent='Unavailable'}}refresh();setInterval(refresh,30*60*1000)})();</script>
+<script defer src="/assets/deal-preview.js?v=xw-20261019c"></script><script defer src="/assets/landing-trust-stats.js?v=xw-20261019b"></script><script defer src="/assets/preferences.js?v=xw-20261019c"></script><script defer src="/assets/navigation.js?v=xw-20261014k"></script><script defer src="/assets/pwa-install.js?v=xw-20261014k"></script><script type="text/javascript">var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/6adf00f0ad4f243471e7960d/1k5rhnbfb';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();</script></body></html>
