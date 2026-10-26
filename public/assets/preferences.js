@@ -22,8 +22,61 @@
   });
   Object.assign(strings.fil,{'My deals':'Mga deal ko','Sign out':'Mag-sign out','Create room & get code':'Gumawa ng room at kumuha ng code','Join a deal room':'Sumali sa deal room','Join room →':'Sumali sa room →','Deal title':'Pamagat ng deal','My role':'Aking papel','Currency':'Pera','Amount':'Halaga','Agreed terms':'Napagkasunduang tuntunin','Waiting for participants':'Naghihintay ng mga kalahok','Ready for deposit':'Handa na sa deposito','Deposit under review':'Sinusuri ang deposito','Funds confirmed':'Nakumpirma ang pondo','Delivery submitted':'Naipasa ang paghahatid','Payout requested':'Hiniling ang payout','Released':'Na-release','Dispute under review':'Sinusuri ang reklamo','Cancelled':'Kinansela','Refund recorded':'Naitala ang refund','Buyer':'Buyer','Seller':'Seller','Third party':'Third party','KES · M-Pesa':'KES · M-Pesa','USDT · crypto':'USDT · crypto','Account created. You can sign in now.':'Nagawa na ang account. Maaari ka nang mag-sign in.'});
   Object.assign(strings.ar,{'My deals':'صفقاتي','Sign out':'تسجيل الخروج','Create room & get code':'أنشئ غرفة واحصل على الرمز','Join a deal room':'انضم إلى غرفة صفقة','Join room →':'انضم إلى الغرفة ←','Deal title':'عنوان الصفقة','My role':'دوري','Currency':'العملة','Amount':'المبلغ','Agreed terms':'الشروط المتفق عليها','Waiting for participants':'بانتظار المشاركين','Ready for deposit':'جاهز للإيداع','Deposit under review':'الإيداع قيد المراجعة','Funds confirmed':'تم تأكيد الأموال','Delivery submitted':'تم إرسال التسليم','Payout requested':'تم طلب التحويل','Released':'تم التحويل','Dispute under review':'النزاع قيد المراجعة','Cancelled':'أُلغيت','Refund recorded':'تم تسجيل الاسترداد','Buyer':'المشتري','Seller':'البائع','Third party':'طرف ثالث','KES · M-Pesa':'KES · M-Pesa','USDT · crypto':'USDT · عملة رقمية','Account created. You can sign in now.':'تم إنشاء الحساب. يمكنك تسجيل الدخول الآن.'});
+  Object.assign(strings,{es:{},ru:{},id:{},zh:{},hi:{}});
+  const languageLines=[
+    ['How it works','Cómo funciona','Как это работает','Cara kerja','工作原理','यह कैसे काम करता है','Paano ito gumagana','كيف يعمل'],
+    ['Fees','Tarifas','Комиссии','Biaya','费用','शुल्क','Mga bayarin','الرسوم'],
+    ['USDT kiosk','Quiosco USDT','Пункт USDT','Kios USDT','USDT 交易','USDT कियोस्क','USDT kiosk','كشك USDT'],
+    ['Safety','Seguridad','Безопасность','Keamanan','安全','सुरक्षा','Kaligtasan','الأمان'],
+    ['Sign in','Iniciar sesión','Войти','Masuk','登录','साइन इन','Mag-sign in','تسجيل الدخول'],
+    ['Create account','Crear cuenta','Создать аккаунт','Buat akun','创建账户','खाता बनाएँ','Gumawa ng account','إنشاء حساب'],
+    ['Install app','Instalar aplicación','Установить приложение','Pasang aplikasi','安装应用','ऐप इंस्टॉल करें','I-install ang app','تثبيت التطبيق'],
+    ['Dark mode','Modo oscuro','Тёмная тема','Mode gelap','深色模式','डार्क मोड','Madilim na tema','الوضع الداكن'],
+    ['Light mode','Modo claro','Светлая тема','Mode terang','浅色模式','लाइट मोड','Maliwanag na tema','الوضع الفاتح'],
+    ['Start a deal','Iniciar un trato','Начать сделку','Mulai transaksi','开始交易','डील शुरू करें','Magsimula ng deal','ابدأ صفقة'],
+    ['See how it works','Ver cómo funciona','Как это работает','Lihat cara kerja','了解流程','कैसे काम करता है देखें','Tingnan kung paano ito gumagana','شاهد كيف يعمل'],
+    ['Buying or selling?','¿Compras o vendes?','Покупаете или продаёте?','Membeli atau menjual?','买入还是卖出？','खरीद या बिक्री?','Bumibili o nagbebenta?','هل تشتري أم تبيع؟'],
+    ['Keep the deal protected.','Protege la operación.','Защитите сделку.','Lindungi transaksi.','保障交易安全。','डील सुरक्षित रखें।','Protektahan ang deal.','احمِ الصفقة.'],
+    ['LIVE ESCROW TOTALS','TOTAL EN DEPÓSITO','СРЕДСТВА В ЭСКРОУ','TOTAL ESCROW AKTIF','托管总额','एस्क्रो में कुल राशि','KABUUANG NASA ESCROW','إجمالي الأموال المحجوزة'],
+    ['KES HELD','KES EN DEPÓSITO','KES В ЭСКРОУ','KES DI ESCROW','托管 KES','एस्क्रो में KES','KES NA NASA ESCROW','KES محجوزة'],
+    ['USDT HELD','USDT EN DEPÓSITO','USDT В ЭСКРОУ','USDT DI ESCROW','托管 USDT','एस्क्रो में USDT','USDT NA NASA ESCROW','USDT محجوزة'],
+    ['BEFORE YOU PAY','ANTES DE PAGAR','ПЕРЕД ОПЛАТОЙ','SEBELUM MEMBAYAR','付款前','भुगतान से पहले','BAGO MAGBAYAD','قبل الدفع'],
+    ['Check before you trade','Comprueba antes de operar','Проверьте перед сделкой','Periksa sebelum bertransaksi','交易前先检查','लेन-देन से पहले जाँचें','Suriin bago makipagtransaksyon','تحقق قبل التداول'],
+    ['Use these quick checks to confirm a deal, verify a listed contact, and review or submit safety reports.','Usa estas comprobaciones para confirmar una operación, verificar un contacto y revisar o enviar reportes.','Используйте эти проверки, чтобы подтвердить сделку, контакт и изучить или отправить сообщение о проблеме.','Gunakan pemeriksaan ini untuk memastikan transaksi, memverifikasi kontak, serta meninjau atau mengirim laporan keamanan.','使用这些快捷检查来确认交易、核实联系人并查看或提交安全报告。','डील की पुष्टि, सूचीबद्ध संपर्क की जाँच और सुरक्षा रिपोर्ट देखने या भेजने के लिए इन जाँचों का उपयोग करें।','Gamitin ang mga mabilisang check para kumpirmahin ang deal at contact, at tingnan o magsumite ng safety report.','استخدم هذه الفحوصات لتأكيد الصفقة والتحقق من جهة الاتصال ومراجعة بلاغات السلامة أو إرسالها.'],
+    ['Verify a deal','Verificar una operación','Проверить сделку','Verifikasi transaksi','验证交易','डील सत्यापित करें','I-verify ang deal','تحقق من الصفقة'],
+    ['Check the deal code, status and participants.','Consulta el código, estado y participantes.','Проверьте код, статус и участников.','Periksa kode, status, dan peserta transaksi.','查看交易代码、状态和参与者。','डील कोड, स्थिति और प्रतिभागियों की जाँच करें।','Suriin ang code, status at mga kalahok.','تحقق من رمز الصفقة وحالتها والمشاركين فيها.'],
+    ['Check a XWADDA contact','Verificar un contacto de XWADDA','Проверить контакт XWADDA','Periksa kontak XWADDA','核实 XWADDA 联系方式','XWADDA संपर्क की जाँच करें','Suriin ang contact ng XWADDA','تحقق من جهة اتصال XWADDA'],
+    ['Confirm a listed support contact before paying.','Confirma el contacto de soporte antes de pagar.','Проверьте контакт поддержки перед оплатой.','Pastikan kontak dukungan terdaftar sebelum membayar.','付款前确认已列出的支持联系人。','भुगतान से पहले सूचीबद्ध सहायता संपर्क की पुष्टि करें।','Kumpirmahin ang nakalistang support contact bago magbayad.','تحقق من جهة الدعم المدرجة قبل الدفع.'],
+    ['Search scam reports','Buscar reportes de estafa','Поиск сообщений о мошенничестве','Cari laporan penipuan','搜索诈骗报告','घोटाले की रिपोर्ट खोजें','Maghanap ng scam report','ابحث عن بلاغات الاحتيال'],
+    ['Look for reviewed reports about a number or account.','Busca reportes revisados sobre un número o cuenta.','Найдите проверенные сообщения о номере или аккаунте.','Cari laporan yang telah ditinjau tentang nomor atau akun.','查找经过审核的号码或账户报告。','किसी नंबर या खाते के बारे में समीक्षित रिपोर्ट देखें।','Maghanap ng nasuring ulat tungkol sa numero o account.','ابحث عن بلاغات تمت مراجعتها حول رقم أو حساب.'],
+    ['Report a scammer','Denunciar una estafa','Сообщить о мошеннике','Laporkan penipu','举报诈骗者','घोटाले की रिपोर्ट करें','Mag-ulat ng scammer','أبلغ عن محتال'],
+    ['Send a report for private review.','Envía un reporte para revisión privada.','Отправьте сообщение на закрытую проверку.','Kirim laporan untuk ditinjau secara pribadi.','提交报告以供私下审核。','निजी समीक्षा के लिए रिपोर्ट भेजें।','Ipadala ang ulat para sa pribadong pagsusuri.','أرسل بلاغًا لمراجعته بشكل خاص.'],
+    ['Buyer · Seller · Third party','Comprador · vendedor · tercero','Покупатель · продавец · третья сторона','Pembeli · penjual · pihak ketiga','买家 · 卖家 · 第三方','खरीदार · विक्रेता · तीसरा पक्ष','Buyer · seller · ikatlong panig','المشتري · البائع · طرف ثالث'],
+    ['How XWADDA works','Cómo funciona XWADDA','Как работает XWADDA','Cara kerja XWADDA','XWADDA 如何运作','XWADDA कैसे काम करता है','Paano gumagana ang XWADDA','كيف يعمل XWADDA'],
+    ['Agree the terms','Acuerden las condiciones','Согласуйте условия','Sepakati ketentuan','商定条款','शर्तें तय करें','Pagkasunduan ang mga tuntunin','اتفقوا على الشروط'],
+    ['Buyer pays into escrow','El comprador deposita en garantía','Покупатель вносит средства в эскроу','Pembeli membayar ke escrow','买家支付至托管','खरीदार एस्क्रो में भुगतान करता है','Nagbabayad ang buyer sa escrow','يدفع المشتري إلى الضمان'],
+    ['Seller delivers','El vendedor entrega','Продавец выполняет обязательства','Penjual menyerahkan pesanan','卖家交付','विक्रेता डिलीवर करता है','Naghahatid ang seller','يسلم البائع'],
+    ['Release or dispute','Liberar o disputar','Выплата или спор','Rilis atau sengketa','放款或争议','रिलीज़ या विवाद','I-release o mag-dispute','إطلاق أو نزاع'],
+    ['Deal rooms','Salas de operaciones','Комнаты сделок','Ruang transaksi','交易室','डील रूम','Mga deal room','غرف الصفقات'],
+    ['Dashboard','Panel','Панель управления','Dasbor','控制面板','डैशबोर्ड','Dashboard','لوحة التحكم'],
+    ['Create escrow','Crear depósito en garantía','Создать эскроу','Buat escrow','创建托管','एस्क्रो बनाएँ','Gumawa ng escrow','إنشاء ضمان'],
+    ['Join with a code','Unirse con un código','Войти по коду','Gabung dengan kode','使用代码加入','कोड से जुड़ें','Sumali gamit ang code','انضم باستخدام رمز'],
+    ['My numbers','Mis números','Мои номера','Nomor saya','我的号码','मेरे नंबर','Aking mga numero','أرقامي'],
+    ['Wallet & payouts','Cartera y pagos','Кошелёк и выплаты','Dompet & pencairan','钱包与付款','वॉलेट और भुगतान','Wallet at payout','المحفظة والمدفوعات'],
+    ['Market scan','Explorar el mercado','Обзор рынка','Jelajahi pasar','市场扫描','मार्केट स्कैन','Market scan','استكشاف السوق'],
+    ['Find sellers','Buscar vendedores','Найти продавцов','Cari penjual','查找卖家','विक्रेता खोजें','Maghanap ng seller','ابحث عن بائعين'],
+    ['Scam watch','Alerta de estafas','Защита от мошенничества','Pantauan penipuan','诈骗监测','घोटाला निगरानी','Scam watch','مراقبة الاحتيال'],
+    ['Support','Soporte','Поддержка','Dukungan','支持','सहायता','Suporta','الدعم'],
+    ['Your rooms and updates, all in one place.','Tus salas y novedades, en un solo lugar.','Ваши комнаты и обновления — в одном месте.','Ruang dan pembaruan Anda di satu tempat.','您的交易室和动态，一目了然。','आपके डील रूम और अपडेट एक ही जगह।','Nasa iisang lugar ang iyong mga room at update.','غرفك وتحديثاتك في مكان واحد.'],
+    ['Released','Liberado','Выплачено','Dirilis','已放款','रिलीज़ किया गया','Na-release','تم الإطلاق'],
+    ['Cancelled','Cancelado','Отменено','Dibatalkan','已取消','रद्द किया गया','Kinansela','أُلغيت'],
+    ['Completed','Completado','Завершено','Selesai','已完成','पूरा हुआ','Nakumpleto','مكتمل']
+  ];
+  const languageCodes=['en','es','ru','id','zh','hi','fil','ar'];
+  for(const row of languageLines)languageCodes.forEach((code,index)=>{if(index&&row[index])strings[code][row[0]]=row[index]});
   const languageKey='xwadda.language',themeKey='xwadda.theme';
-  const language=localStorage.getItem(languageKey)||'en';
+  const storedLanguage=localStorage.getItem(languageKey)||'en';
+  const language=strings[storedLanguage]?storedLanguage:'en';
   const theme=localStorage.getItem(themeKey)||'light';
   document.documentElement.lang=language;document.documentElement.dir=language==='ar'?'rtl':'ltr';
   document.body.dataset.theme=theme;
@@ -32,11 +85,15 @@
     const dict=strings[lang]||{};
     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
     const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-    for(const node of nodes){const parent=node.parentElement;if(!parent||parent.closest('script,style,textarea,input,select[data-language],.message,.terms-copy,[data-user-content]'))continue;if(!Object.prototype.hasOwnProperty.call(node,'__xwaddaOriginalText'))node.__xwaddaOriginalText=node.nodeValue;const raw=node.__xwaddaOriginalText,trimmed=raw.trim();node.nodeValue=dict[trimmed]?raw.replace(trimmed,dict[trimmed]):raw;}
-    localStorage.setItem(languageKey,lang);updateThemeLabel();
+    for(const node of nodes){const parent=node.parentElement;if(!parent||parent.closest('script,style,textarea,input,select[data-language],.message,.terms-copy,[data-user-content],[data-language-picker]'))continue;if(!Object.prototype.hasOwnProperty.call(node,'__xwaddaOriginalText'))node.__xwaddaOriginalText=node.nodeValue;const raw=node.__xwaddaOriginalText,trimmed=raw.trim();node.nodeValue=dict[trimmed]?raw.replace(trimmed,dict[trimmed]):raw;}
+    localStorage.setItem(languageKey,lang);updateLanguagePickers(lang);updateThemeLabel();
   }
-  function updateThemeLabel(){const b=document.querySelector('[data-theme-toggle]');if(!b)return;const labels={en:['Dark mode','Light mode'],fil:['Madilim na tema','Maliwanag na tema'],ar:['الوضع الداكن','الوضع الفاتح']}[document.documentElement.lang]||['Dark mode','Light mode'];b.textContent=labels[document.body.dataset.theme==='dark'?1:0];}
-  document.querySelectorAll('[data-language]').forEach(sel=>{sel.value=language;sel.addEventListener('change',()=>translate(sel.value));});
+  function updateThemeLabel(){const labels={en:['Dark mode','Light mode'],es:['Modo oscuro','Modo claro'],ru:['Тёмная тема','Светлая тема'],id:['Mode gelap','Mode terang'],zh:['深色模式','浅色模式'],hi:['डार्क मोड','लाइट मोड'],fil:['Madilim na tema','Maliwanag na tema'],ar:['الوضع الداكن','الوضع الفاتح']};const current=labels[document.documentElement.lang]||labels.en;document.querySelectorAll('[data-theme-toggle]').forEach(b=>b.textContent=current[document.body.dataset.theme==='dark'?1:0]);}
+  function updateLanguagePickers(lang){const names={en:'EN',es:'ES',ru:'RU',id:'ID',zh:'中文',hi:'हि',fil:'FIL',ar:'AR'};document.querySelectorAll('[data-language-picker]').forEach(picker=>{const code=picker.querySelector('[data-language-code]'),trigger=picker.querySelector('[data-language-trigger]');if(code)code.textContent=names[lang]||'EN';picker.querySelectorAll('[data-language-choice]').forEach(option=>option.setAttribute('aria-selected',String(option.dataset.languageChoice===lang)));if(trigger)trigger.setAttribute('aria-label','Choose language');});}
+  document.querySelectorAll('[data-language-trigger]').forEach(trigger=>trigger.addEventListener('click',()=>{const picker=trigger.closest('[data-language-picker]'),menu=picker.querySelector('[data-language-menu]'),open=menu.hidden;document.querySelectorAll('[data-language-menu]').forEach(other=>{other.hidden=true;other.closest('[data-language-picker]')?.querySelector('[data-language-trigger]')?.setAttribute('aria-expanded','false')});menu.hidden=!open;trigger.setAttribute('aria-expanded',String(open));if(open)menu.querySelector('[aria-selected="true"]')?.focus();}));
+  document.querySelectorAll('[data-language-choice]').forEach(option=>option.addEventListener('click',()=>{translate(option.dataset.languageChoice);document.querySelectorAll('[data-language-menu]').forEach(menu=>{menu.hidden=true;menu.closest('[data-language-picker]')?.querySelector('[data-language-trigger]')?.setAttribute('aria-expanded','false')});}));
+  document.addEventListener('click',event=>{if(!event.target.closest('[data-language-picker]'))document.querySelectorAll('[data-language-menu]').forEach(menu=>{menu.hidden=true;menu.closest('[data-language-picker]')?.querySelector('[data-language-trigger]')?.setAttribute('aria-expanded','false')});});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')document.querySelectorAll('[data-language-menu]').forEach(menu=>{menu.hidden=true;menu.closest('[data-language-picker]')?.querySelector('[data-language-trigger]')?.setAttribute('aria-expanded','false')});});
   document.querySelectorAll('[data-theme-toggle]').forEach(b=>b.addEventListener('click',()=>{document.body.dataset.theme=document.body.dataset.theme==='dark'?'light':'dark';localStorage.setItem(themeKey,document.body.dataset.theme);updateThemeLabel();}));
-  if(language!=='en')translate(language);updateThemeLabel();
+  updateLanguagePickers(language);if(language!=='en')translate(language);updateThemeLabel();
 })();
