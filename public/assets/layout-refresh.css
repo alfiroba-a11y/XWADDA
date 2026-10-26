@@ -415,3 +415,37 @@ body[data-theme="dark"] .admin-operation-summary:hover{background:#24272b}
 .maintenance-channel-field{grid-column:1/-1}
 @media(max-width:620px){.maintenance-fields{grid-template-columns:1fr}.maintenance-channel-field{grid-column:auto}.maintenance-switch-form{width:100%}.maintenance-settings-form{padding:14px}}
 body[data-theme="dark"] .maintenance-settings-form{border-color:#45494f}
+
+/* Payment network choices stay neutral until one is selected. */
+body[data-theme] .payment-method-card .row button[data-net],
+body[data-theme] .kiosk-direction button[data-direction]{background:#fff!important;color:#111!important;border:1px solid #777!important;box-shadow:none!important}
+body[data-theme] .payment-method-card .row button[data-net].is-selected,
+body[data-theme] .kiosk-direction button[data-direction].is-selected{background:#315efb!important;color:#fff!important;border-color:#315efb!important}
+body[data-theme] .portal-dialog select option:checked,
+body[data-theme] .stack-form select option:checked{background:#315efb!important;color:#fff!important}
+body[data-theme="dark"] .payment-method-card .row button[data-net],
+body[data-theme="dark"] .kiosk-direction button[data-direction]{background:#fff!important;color:#111!important}
+body[data-theme="dark"] .payment-method-card .row button[data-net].is-selected,
+body[data-theme="dark"] .kiosk-direction button[data-direction].is-selected{background:#315efb!important;color:#fff!important}
+
+/* Choice controls stay neutral until a member selects an option. */
+body[data-theme] .role-choice-select{background:#fff!important;color:#111!important;border:1px solid #777!important}
+body[data-theme] .role-choice-select.is-selected{background:#315efb!important;color:#fff!important;border-color:#315efb!important}
+body[data-theme] .role-choice-select option{background:#fff;color:#111}
+body[data-theme] .payment-method-card .row button[data-net],body[data-theme] .kiosk-direction button[data-direction]{background:#fff!important;color:#111!important;border:1px solid #777!important;box-shadow:none!important}
+body[data-theme] .payment-method-card .row button[data-net].is-selected,body[data-theme] .kiosk-direction button[data-direction].is-selected{background:#315efb!important;color:#fff!important;border-color:#315efb!important}
+body[data-theme="dark"] .role-choice-select option{background:#fff;color:#111}body[data-theme] .preview-method{background:#fff!important;color:#111!important;border-color:#777!important}
+body[data-theme] .preview-method.active{background:#315efb!important;color:#fff!important;border-color:#315efb!important}
+/* Public safety tools */
+.public-safety-tools{display:grid;grid-template-columns:minmax(220px,.75fr) minmax(0,1.5fr);gap:28px;align-items:center;margin:36px auto;padding:30px;border:1px solid var(--line,#dfe2e8);border-radius:20px;background:var(--surface,#fff);color:var(--ink,#111318)}
+.public-safety-tools h2{margin:.45rem 0}.public-safety-tools p{color:var(--muted,#667085)}
+.public-tool-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.public-tool-links a{display:flex;flex-direction:column;gap:8px;min-height:110px;padding:18px;border:1px solid var(--line,#dfe2e8);border-radius:14px;background:var(--page,#f4f5f7);color:var(--ink,#111318);text-decoration:none}
+.public-tool-links a:hover{border-color:var(--accent,#3157df);transform:translateY(-2px)}
+.public-tool-links span,.form-note{color:var(--muted,#667085)}
+.public-tool-page .panel-light{margin-block:18px}
+.public-check-result,.scam-result{margin-top:22px;padding:20px;border:1px solid var(--line,#dfe2e8);border-radius:14px;background:var(--page,#f4f5f7);color:var(--ink,#111318)}
+.public-check-result dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.public-check-result dl div{padding:12px;border:1px solid var(--line,#dfe2e8);border-radius:10px}.public-check-result dt{color:var(--muted,#667085);font-size:.85rem}.public-check-result dd{margin:5px 0 0;font-weight:700}
+.trusted-contact-list{display:grid;gap:10px}.trusted-contact-row{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:14px;border:1px solid var(--line,#dfe2e8);border-radius:10px}.trusted-contact-row code{overflow-wrap:anywhere}
+ @media(max-width:760px){.public-safety-tools{grid-template-columns:1fr;padding:20px}.public-tool-links{grid-template-columns:1fr}.public-tool-links a{min-height:auto}.public-check-result dl{grid-template-columns:1fr}.trusted-contact-row{grid-template-columns:1fr}}
