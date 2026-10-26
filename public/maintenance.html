@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#f5f6f8">
+  <title>Maintenance · XWADDA.KE</title>
+  <style>
+    :root{color-scheme:light;--ink:#172033;--muted:#687386;--line:#e1e6ed;--blue:#3157df;--paper:#f5f6f8;--white:#fff}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--paper);color:var(--ink);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    .card{width:min(100%,520px);padding:clamp(26px,6vw,46px);border:1px solid var(--line);border-radius:22px;background:var(--white);box-shadow:0 20px 60px #15213a12}
+    .brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:35px;color:var(--ink);font-size:14px;font-weight:800;letter-spacing:.08em;text-decoration:none}.brand img{width:42px;height:42px;object-fit:contain}.status{display:inline-flex;align-items:center;gap:9px;margin:0 0 14px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.status i{width:9px;height:9px;border-radius:50%;background:#3157df;box-shadow:0 0 0 5px #3157df18}
+    h1{margin:0 0 12px;font-size:clamp(30px,7vw,42px);line-height:1.1;letter-spacing:-.045em} .intro{margin:0;color:var(--muted);font-size:15px}
+    .support{display:grid;gap:12px;margin-top:28px}.support a{display:flex;align-items:center;justify-content:space-between;min-height:54px;padding:13px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-weight:700;text-decoration:none;transition:transform .16s ease,border-color .16s ease,background .16s ease}.support a:hover{transform:translateY(-2px);border-color:var(--blue);background:#f8f9ff}.support a.primary{border-color:#1e293b;background:#1e293b;color:#fff}.support a[hidden]{display:none}.arrow{color:var(--blue);font-size:20px}.primary .arrow{color:#fff}
+    .note{margin:22px 0 0;padding:14px 15px;border-radius:12px;background:#f4f6fa;color:var(--muted);font-size:13px}.chat-note{margin:19px 0 0;text-align:center;color:var(--muted);font-size:13px}.chat-note strong{color:var(--ink)}footer{margin-top:30px;padding-top:19px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <a class="brand" href="/" aria-label="XWADDA home"><img src="/assets/xw-logo.png" alt=""><span>XWADDA.KE</span></a>
+    <p class="status"><i></i> Service update</p>
+    <h1>Maintenance in progress</h1>
+    <p class="intro">We’re making improvements to the website. You can still reach our support team while we work.</p>
+    <div class="support" aria-label="WhatsApp support contacts">
+      <a class="primary" id="support1" href="#" hidden><span>Contact Support 1 on WhatsApp</span><span class="arrow" aria-hidden="true">↗</span></a>
+      <a id="support2" href="#" hidden><span>Contact Support 2 on WhatsApp</span><span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+    <p id="contacts-note" class="note" hidden>WhatsApp support contacts are not available right now. Please use the live chat.</p>
+    <p class="chat-note">Need help now? <strong>Open the live chat</strong> using the chat button on this page.</p>
+    <footer>XWADDA.KE · Thank you for your patience.</footer>
+  </main>
+  <script>
+    (async()=>{const links=[document.getElementById('support1'),document.getElementById('support2')];try{const response=await fetch('/api/public/support-contacts',{cache:'no-store'});const result=await response.json();if(!response.ok||!result.ok)throw new Error();const values=[result.contacts.support1,result.contacts.support2];links.forEach((link,index)=>{if(values[index]){link.href=values[index];link.hidden=false;link.target='_blank';link.rel='noopener noreferrer'}});document.getElementById('contacts-note').hidden=Boolean(values[0]||values[1])}catch{document.getElementById('contacts-note').hidden=false}})();
+  </script>
+  <script type="text/javascript">var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();(function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/6adf00f0ad4f243471e7960d/1k5rhnbfb';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();</script>
+</body>
+</html>
