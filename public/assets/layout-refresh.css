@@ -398,3 +398,20 @@ body[data-theme="dark"] .admin-operation-summary:hover{background:#24272b}
 .mpesa-control-section{border:2px solid #202328!important}
 .admin-head-actions form button{min-height:42px}
 @media(max-width:640px){.admin-operation-summary{padding:14px;font-size:14px}.admin-operation-card>.admin-section-head,.admin-operation-card>.admin-record-list,.admin-operation-card>.admin-table-wrap,.admin-operation-card>.admin-two-col,.admin-operation-card>form{margin-left:12px;margin-right:12px}.admin-head-actions{justify-content:flex-start}}
+/* Full website maintenance controls */
+.maintenance-switch-form{margin:0}
+.switch-label{display:flex;align-items:center;gap:14px;cursor:pointer;font-weight:700}
+.switch-input{position:absolute;opacity:0;width:1px;height:1px}
+.switch-track{position:relative;display:inline-block;width:58px;height:32px;border-radius:99px;background:#767676;border:2px solid #555;transition:background .18s ease}
+.switch-track:after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .18s ease}
+.switch-input:checked+.switch-track{background:#111;border-color:#111}
+.switch-input:checked+.switch-track:after{transform:translateX(26px)}
+.switch-input:focus-visible+.switch-track{outline:3px solid #3157df;outline-offset:3px}
+.maintenance-settings-form{padding:18px 20px;border-top:1px solid #dfe2e8}
+.maintenance-settings-form h3{margin:0 0 14px}
+.maintenance-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.maintenance-fields label{display:grid;gap:6px;font-weight:650}
+.maintenance-fields input{width:100%;min-height:42px;padding:9px 11px;border:1px solid #aeb4bd;border-radius:8px;background:#fff;color:#111}
+.maintenance-channel-field{grid-column:1/-1}
+@media(max-width:620px){.maintenance-fields{grid-template-columns:1fr}.maintenance-channel-field{grid-column:auto}.maintenance-switch-form{width:100%}.maintenance-settings-form{padding:14px}}
+body[data-theme="dark"] .maintenance-settings-form{border-color:#45494f}
