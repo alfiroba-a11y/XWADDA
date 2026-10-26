@@ -356,3 +356,45 @@ body[data-theme="dark"] .kiosk-direction button.is-selected{background:#f4f4f4;c
 .mpesa-maintenance-notice{margin:18px auto;padding:16px 20px;max-width:960px;border:2px solid #111;border-radius:10px;background:#fff;color:#111;font-weight:800;text-align:center;letter-spacing:.04em}
 body[data-theme="dark"] .mpesa-maintenance-notice{background:#111;color:#fff;border-color:#fff}
 @media(max-width:760px){#accounts .admin-record{grid-template-columns:1fr;gap:8px}#accounts .admin-record-heading>div,#accounts .admin-record-heading>span,#accounts .admin-record>.admin-inline-form{grid-column:1}#accounts .admin-record>.admin-inline-form{justify-content:flex-start}}
+/* Higher contrast role selectors, codes and status pills in both themes. */
+body[data-theme="light"] .stack-form select,
+body[data-theme="light"] .portal-dialog select,
+body[data-theme="light"] .admin-filter select,
+body[data-theme="light"] .admin-inline-form select,
+body[data-theme="light"] .admin-action-form select {background:#fff!important;color:#111!important;border-color:#555!important}
+body[data-theme="light"] .stack-form select option,
+body[data-theme="light"] .portal-dialog select option,
+body[data-theme="light"] .admin-filter select option,
+body[data-theme="light"] .admin-inline-form select option {background:#fff!important;color:#111!important}
+body[data-theme="dark"] .stack-form select,
+body[data-theme="dark"] .portal-dialog select,
+body[data-theme="dark"] .admin-filter select,
+body[data-theme="dark"] .admin-inline-form select,
+body[data-theme="dark"] .admin-action-form select {background:#fff!important;color:#111!important;border:2px solid #111!important}
+body[data-theme="dark"] .stack-form select option,
+body[data-theme="dark"] .portal-dialog select option,
+body[data-theme="dark"] .admin-filter select option,
+body[data-theme="dark"] .admin-inline-form select option {background:#fff!important;color:#111!important}
+body[data-theme="light"] .deal-card .deal-code,
+body[data-theme="dark"] .deal-card .deal-code {background:#15171a!important;color:#fff!important;border:1px solid #15171a!important}
+body[data-theme="light"] .deal-card .state-pill {background:#f2f4f7!important;color:#111!important;border:1px solid #59616d!important}
+body[data-theme="dark"] .deal-card .state-pill {background:#fff!important;color:#111!important;border:1px solid #fff!important}
+
+/* Admin operations open from compact cards; the M-Pesa control has its own card. */
+.admin-operation-card{padding:0!important;overflow:hidden}
+.admin-operation-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;padding:18px 20px;cursor:pointer;list-style:none;font-weight:750;font-size:16px}
+.admin-operation-summary::-webkit-details-marker{display:none}
+.admin-operation-summary::after{content:"＋";display:grid;place-items:center;flex:0 0 30px;height:30px;border:1px solid currentColor;border-radius:50%;font-size:19px}
+.admin-operation-card[open]>.admin-operation-summary::after{content:"−"}
+.admin-operation-card>.admin-section-head,.admin-operation-card>.admin-record-list,.admin-operation-card>.admin-table-wrap,.admin-operation-card>.admin-two-col,.admin-operation-card>form,.admin-operation-card>.admin-record-list{margin:0 20px 20px}
+.admin-operation-card>.admin-section-head{padding-top:15px;border-top:1px solid #ccc}
+body[data-theme="dark"] .admin-operation-card>.admin-section-head{border-color:#555}
+.admin-operation-summary:hover{background:#f1f3f5}
+body[data-theme="dark"] .admin-operation-summary:hover{background:#24272b}
+.admin-unread-badge{display:inline-grid;place-items:center;min-width:23px;height:23px;padding:0 6px;border-radius:999px;background:#c52222;color:#fff!important;font-size:12px;font-weight:900}
+.admin-stat{position:relative}
+.admin-stat .admin-unread-badge{position:absolute;top:8px;right:9px}
+.admin-nav .admin-unread-badge{margin-left:5px}
+.mpesa-control-section{border:2px solid #202328!important}
+.admin-head-actions form button{min-height:42px}
+@media(max-width:640px){.admin-operation-summary{padding:14px;font-size:14px}.admin-operation-card>.admin-section-head,.admin-operation-card>.admin-record-list,.admin-operation-card>.admin-table-wrap,.admin-operation-card>.admin-two-col,.admin-operation-card>form{margin-left:12px;margin-right:12px}.admin-head-actions{justify-content:flex-start}}
