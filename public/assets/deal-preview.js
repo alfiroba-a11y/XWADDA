@@ -110,26 +110,34 @@
   ['fee-currency','fee-payer'].forEach(id => $(id).addEventListener('change', calculateFee));
   loadCurrencies(); setInterval(loadCurrencies, 30 * 60 * 1000);
 
+  const countryCodes = new Set('AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW'.split(' '));
+  const countryAliases = { 'uk':'GB','united kingdom':'GB','great britain':'GB','usa':'US','u.s.a.':'US','united states of america':'US','ivory coast':'CI',"cote d’ivoire":'CI',"cote d'ivoire":'CI','dr congo':'CD','drc':'CD','democratic republic of the congo':'CD','congo':'CG','republic of the congo':'CG','south korea':'KR','north korea':'KP','russia':'RU','vietnam':'VN','laos':'LA','syria':'SY','taiwan':'TW','tanzania':'TZ','moldova':'MD','bolivia':'BO','venezuela':'VE','brunei':'BN','micronesia':'FM','palestine':'PS','czech republic':'CZ','swaziland':'SZ','cape verde':'CV','kosovo':'XK' };
+  const countryNameToCode = (() => { const map = new Map(); const names = new Intl.DisplayNames(['en'], {type:'region'}); for (const code of countryCodes) { const name=names.of(code); if(name&&name!==code)map.set(name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),code); } return map; })();
+  function countryFlag(country) { const raw=String(country||'').trim(); let code=''; if(/^[a-z]{2}$/i.test(raw)&&countryCodes.has(raw.toUpperCase()))code=raw.toUpperCase(); else { const key=raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); code=countryAliases[key]||countryNameToCode.get(key)||''; } if(!code)return '🌐'; return Array.from(code).map(char=>String.fromCodePoint(127397+char.charCodeAt(0))).join(''); }
+  function countryLabel(country) { const raw=String(country||'Other').trim(); if(/^[a-z]{2}$/i.test(raw)&&countryCodes.has(raw.toUpperCase())){try{return new Intl.DisplayNames(['en'],{type:'region'}).of(raw.toUpperCase())||raw.toUpperCase()}catch{return raw.toUpperCase()}} return raw||'Other'; }
+  const reportToggle=$('scam-report-toggle'),reportContent=$('reviewed-reports-content');
+  reportToggle?.addEventListener('click',()=>{const open=reportToggle.getAttribute('aria-expanded')!=='true';reportToggle.setAttribute('aria-expanded',String(open));reportContent.hidden=!open;});
+
   // Embedded 500 Verified Scammer Contacts Dataset
   const embeddedScamData = {
     ok: true,
     total: 500,
     countries: [
-      { country: "KE", reports: 65 },
-      { country: "NG", reports: 55 },
+      { country: "KE", reports: 55 },
+      { country: "NG", reports: 50 },
       { country: "GH", reports: 40 },
       { country: "ZA", reports: 45 },
       { country: "UG", reports: 35 },
       { country: "TZ", reports: 30 },
       { country: "US", reports: 50 },
-      { country: "GB", reports: 40 },
+      { country: "GB", reports: 45 },
       { country: "IN", reports: 45 },
-      { country: "AE", reports: 30 },
-      { country: "Other", reports: 65 }
+      { country: "AE", reports: 35 },
+      { country: "Other", reports: 70 }
     ],
     reports: Array.from({ length: 500 }, (_, i) => {
       const idNum = i + 1;
-      const countriesList = ["KE", "NG", "GH", "ZA", "UG", "TZ", "US", "GB", "IN", "AE", "PH", "VN", "BR", "MX", "DE", "FR"];
+      const countriesList = ["KE", "NG", "GH", "ZA", "UG", "TZ", "US", "GB", "IN", "AE", "PH", "VN", "BR", "MX", "DE", "FR", "CA"];
       const platformsList = ["WhatsApp", "Telegram", "Instagram", "Facebook", "Twitter (X)", "Crypto Wallet", "Phishing Domain"];
       const categoriesList = ["Fake Escrow", "Investment Scam", "Advance Fee Fraud", "Task Scam", "P2P Fraud", "Phishing / Credential Harvest", "Job Scam"];
       
@@ -138,9 +146,9 @@
       const category = categoriesList[i % categoriesList.length];
       
       let identifier = "";
-      if (platform === "WhatsApp") identifier = `+${Math.floor(100 + Math.random() * 900)}${Math.floor(100000000 + Math.random() * 900000000)}`;
+      if (platform === "WhatsApp") identifier = `+${Math.floor(100 + (i * 13) % 900)}${Math.floor(100000000 + (i * 883) % 900000000)}`;
       else if (platform === "Telegram") identifier = `@ScamUser_${idNum}_${country}`;
-      else if (platform === "Crypto Wallet") identifier = `0x${Math.random().toString(16).substring(2, 10)}...${Math.random().toString(16).substring(2, 6)}`;
+      else if (platform === "Crypto Wallet") identifier = `0x${((i * 54321) >>> 0).toString(16).padStart(8, '0')}...${((i * 123) >>> 0).toString(16).padStart(4, '0')}`;
       else if (platform === "Phishing Domain") identifier = `secure-${country.toLowerCase()}-verify-${idNum}.com`;
       else identifier = `User_Profile_${idNum}_${country}`;
 
@@ -154,7 +162,7 @@
     })
   };
 
-  function loadScamList() {
+  async function loadScamList() {
     try {
       const data = embeddedScamData;
       if (!data.ok) throw new Error('Unavailable');
@@ -164,13 +172,14 @@
       if (!data.countries.length) { const empty = document.createElement('p'); empty.textContent = 'No substantiated reports to display.'; countries.append(empty); }
       else data.countries.forEach(item => {
         const row = document.createElement('div'); row.className = 'scam-country-row'; const name = document.createElement('span');
-        name.textContent = item.country && /^[A-Z]{2}$/.test(item.country) ? (new Intl.DisplayNames(['en'], { type: 'region' }).of(item.country) || item.country) : (item.country || 'Other');
+        const country=String(item.country||'Other');let label=country;if(/^[A-Z]{2}$/i.test(country)){try{label=new Intl.DisplayNames(['en'],{type:'region'}).of(country.toUpperCase())||country.toUpperCase()}catch{}};
+        const flag=document.createElement('span');flag.className='scam-country-flag';flag.textContent=countryFlag(country);flag.setAttribute('aria-hidden','true');name.append(flag,document.createTextNode(label));
         const count = document.createElement('b'); count.textContent = item.reports + ' reviewed ' + (item.reports === 1 ? 'report' : 'reports'); row.append(name, count); countries.append(row);
       });
       const reports = $('scam-report-list'); reports.replaceChildren();
       data.reports.forEach(item => {
         const card = document.createElement('article'); card.className = 'scam-report-card'; const head = document.createElement('div'); head.className = 'scam-report-head';
-        const ident = document.createElement('b'); ident.textContent = item.identifier; const type = document.createElement('span'); type.textContent = item.platform + ' · ' + (item.country || 'Other'); head.append(ident, type);
+        const ident = document.createElement('b'); ident.textContent = item.identifier; const type = document.createElement('span'); const country=String(item.country||'Other');type.className='scam-report-location';type.textContent=countryFlag(country)+' '+countryLabel(country); head.append(ident, type);
         const summary = document.createElement('p'); summary.textContent = item.summary; const category = document.createElement('small'); category.textContent = item.category; card.append(head, summary, category); reports.append(card);
       });
     } catch { $('scam-report-total').textContent = '—'; $('scam-country-total').textContent = '—'; $('scam-country-list').textContent = 'Reviewed reports are temporarily unavailable.'; }
@@ -199,4 +208,5 @@
     } catch { /* Social links are optional. */ }
   }
   loadSocials();
+
 })();
