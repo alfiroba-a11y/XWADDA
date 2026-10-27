@@ -111,3 +111,21 @@ body[data-theme="dark"] .landing-tools-card,body[data-theme="dark"] .landing-too
 
 /* Scam Watch warning treatment and country-to-report drilldown. */
 .public-scam-list .eyebrow{color:#b42318!important}.public-scam-list h2{color:#b42318!important}.public-scam-list .tool-symbol{color:#b42318;stroke:#b42318}.scam-report-toggle{border-color:#e4a3a0!important;background:#fffafa!important}.scam-report-toggle:hover,.scam-report-toggle:focus-visible,.scam-report-toggle[aria-expanded="true"]{border-color:#b42318!important;outline-color:#b4231840!important}.scam-report-toggle span{color:#8e1c16!important}.scam-country-list{display:grid;grid-template-columns:1fr;gap:8px}.scam-country-row{appearance:none;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto 20px;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--xw-line);border-radius:10px;background:var(--xw-surface);color:var(--xw-ink);font:inherit;text-align:left;cursor:pointer}.scam-country-row:hover,.scam-country-row:focus-visible{border-color:#b42318;outline:2px solid #b423182e}.scam-country-row>span:first-child{display:flex;align-items:center;gap:10px}.scam-country-row b{color:#b42318}.scam-country-arrow{font-size:22px;color:#b42318}.scam-view-hint{margin:8px 0 12px;color:var(--xw-muted)}.scam-country-back{margin:2px 0 10px;padding:8px 12px;border:1px solid #b42318;border-radius:8px;background:transparent;color:#b42318;font:inherit;font-weight:700;cursor:pointer}.scam-report-view h3{margin:8px 0 12px;color:#b42318}#scam-report-view[hidden],#scam-country-view[hidden]{display:none!important}body[data-theme="dark"] .scam-report-toggle{background:#211415!important;border-color:#8b3935!important}body[data-theme="dark"] .scam-report-toggle b,body[data-theme="dark"] .scam-report-toggle span{color:#fff!important}body[data-theme="dark"] .scam-country-row{background:#18191c;color:#fff}
+
+/* Quiet room refresh and update inbox */
+.live-notification-tools{position:fixed;z-index:1200;top:82px;right:22px;font-family:inherit}
+.live-bell{position:relative;display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--xw-line,#dfe2e8);border-radius:50%;background:var(--xw-surface,#fff);color:var(--xw-ink,#111318);box-shadow:0 5px 22px #10182824;cursor:pointer;font-size:21px}
+.live-bell:hover{transform:translateY(-1px)}
+.live-badge{position:absolute;top:-4px;right:-4px;min-width:19px;height:19px;padding:0 5px;border-radius:12px;background:#3157df;color:#fff;font-size:11px;font-style:normal;font-weight:800;line-height:19px}
+.live-notification-panel{position:absolute;top:58px;right:0;width:min(360px,calc(100vw - 30px));max-height:55vh;overflow:auto;border:1px solid var(--xw-line,#dfe2e8);border-radius:14px;background:var(--xw-surface,#fff);color:var(--xw-ink,#111318);box-shadow:0 14px 44px #1018282e}
+.live-notification-panel[hidden]{display:none}
+.live-notification-panel header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--xw-line,#dfe2e8);background:var(--xw-surface,#fff)}
+.live-notification-panel header button{border:0;background:transparent;color:inherit;text-decoration:underline;cursor:pointer}
+.live-notification-panel ol{margin:0;padding:0;list-style:none}
+.live-notification-panel li{display:grid;gap:4px;padding:12px 16px;border-bottom:1px solid var(--xw-line,#dfe2e8);overflow-wrap:anywhere}
+.live-notification-panel li small,.live-notification-empty{color:var(--xw-muted,#667085)}
+.live-toast-stack{position:absolute;top:58px;right:0;display:grid;gap:8px;width:min(360px,calc(100vw - 30px));pointer-events:none}
+.live-toast{padding:12px 15px;border:1px solid var(--xw-line,#dfe2e8);border-left:4px solid var(--xw-accent,#3157df);border-radius:11px;background:var(--xw-surface,#fff);color:var(--xw-ink,#111318);box-shadow:0 8px 25px #10182824;animation:room-toast-in .18s ease-out}
+@keyframes room-toast-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:620px){.live-notification-tools{top:74px;right:12px}.live-notification-panel,.live-toast-stack{width:min(330px,calc(100vw - 24px))}}
+.live-bell svg{width:21px;height:21px}
