@@ -49,7 +49,7 @@ app.get('/health', (req,res) => {
   res.status(ready ? 200 : 503).json({ ok: ready, service: 'xwadda', database: ['disconnected','connected','connecting','disconnecting'][state] || 'unknown' });
 });
 app.use((req,res,next) => {
-  if (req.path === '/health' || req.path.startsWith('/assets/')) return next();
+  if (req.path === '/health' || req.path === '/robots.txt' || req.path === '/sitemap.xml' || req.path.startsWith('/assets/')) return next();
   if (mongoose.connection.readyState !== 1) return res.status(503).type('text').send('XWADDA is starting or reconnecting to its database. Refresh in a moment.');
   next();
 });
@@ -578,6 +578,7 @@ app.post('/hashpay-webhook.php',async(req,res)=>{const secret=process.env.HASHPA
 // HashPay callback verification is deliberately unavailable until HashBack's exact signing format is configured.
 app.post('/webhooks/hashpay',async(req,res)=>{if(!process.env.HASHPAY_WEBHOOK_SECRET)return res.status(503).send('Payment webhook is not configured.');const signature=String(req.get('x-hashback-signature')||'');const raw=JSON.stringify(req.body);const expected=crypto.createHmac('sha256',process.env.HASHPAY_WEBHOOK_SECRET).update(raw).digest('hex');if(!signature||!crypto.timingSafeEqual(Buffer.from(signature),Buffer.from(expected)))return res.status(401).send('Invalid signature.');return res.status(501).send('Configure the exact HashBack signed payload and settlement fields before accepting payment callbacks.');});
 
+app.get('/robots.txt',(req,res)=>res.type('text/plain').sendFile(path.join(__dirname,'public','robots.txt')));
 app.get('/sitemap.xml',(req,res)=>res.type('application/xml').sendFile(path.join(__dirname,'public','sitemap.xml')));
 app.use('/assets',express.static(path.join(__dirname,'public','assets'),{immutable:true,maxAge:'7d'}));
 app.get('/manifest.webmanifest',(req,res)=>res.type('application/manifest+json').sendFile(path.join(__dirname,'public','manifest.webmanifest')));
