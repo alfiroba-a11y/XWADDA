@@ -49,7 +49,7 @@ app.get('/health', (req,res) => {
   res.status(ready ? 200 : 503).json({ ok: ready, service: 'xwadda', database: ['disconnected','connected','connecting','disconnecting'][state] || 'unknown' });
 });
 app.use((req,res,next) => {
-  if (req.path === '/health' || req.path === '/robots.txt' || req.path === '/sitemap.xml' || req.path.startsWith('/assets/')) return next();
+  if (req.path === '/' || req.path === '/health' || req.path === '/robots.txt' || req.path === '/sitemap.xml' || req.path.startsWith('/assets/')) return next();
   if (mongoose.connection.readyState !== 1) return res.status(503).type('text').send('XWADDA is starting or reconnecting to its database. Refresh in a moment.');
   next();
 });
@@ -307,7 +307,7 @@ app.get('/trusted-contacts',scamLookupLimiter,async(req,res)=>{
  res.set('Cache-Control','no-store').send(render('Contact directory',portal.trustedContacts({platform,input,match,contacts},viewHelpers),req));
 });
 app.get('/api/public/escrow-totals',async(req,res)=>{try{const [totals,secured,verifiedScamReports]=await Promise.all([publicHeldTotals(),publicSecuredTotals(),SafetyReport.countDocuments({status:'substantiated'})]);res.set('Cache-Control','no-store').json({ok:true,asOf:new Date().toISOString(),totals:{KES:{amount:totals.KES.amountMinor/100},USDT:{amount:totals.USDT.amountMinor/100}},secured:{KES:{amount:secured.KES.amountMinor/100},USDT:{amount:secured.USDT.amountMinor/100}},verifiedScamReports});}catch(error){res.status(503).set('Cache-Control','no-store').json({ok:false,error:'Live escrow totals are temporarily unavailable.'});}});
-app.get('/', async(req,res)=>{if(!req.session.user){const html=fs.readFileSync(path.join(__dirname,'public','landing.html'),'utf8');return res.type('html').send(html);}const deals=await accountDeals(req.session.user),siteConfig=await getSiteConfig();return res.send(render('Your dashboard',portal.dashboard(req.session.user,deals,res.locals.csrf,{escapeHtml,money,statusLabel:roomStatusLabel},{mpesaPaused:siteConfig.mpesaPaused}),req));});
+app.get('/', async(req,res)=>{if(!req.session.user){const html=fs.readFileSync(path.join(__dirname,'public','landing.html'),'utf8');return res.type('html').send(html);}if(mongoose.connection.readyState!==1)return res.status(503).type('text').send('Your dashboard is temporarily unavailable while the service reconnects.');const deals=await accountDeals(req.session.user),siteConfig=await getSiteConfig();return res.send(render('Your dashboard',portal.dashboard(req.session.user,deals,res.locals.csrf,{escapeHtml,money,statusLabel:roomStatusLabel},{mpesaPaused:siteConfig.mpesaPaused}),req));});
 app.get('/signin',(req,res)=>{
   const notice=req.query.message?'<div class="notice">'+escapeHtml(req.query.message)+'</div>':'';
   const content=notice+'<section class="auth-card"><span class="eyebrow">WELCOME BACK</span><h1>Sign in to XWADDA</h1><p>Your account and deal history are private to you.</p><form method="post" action="/auth/login" class="auth-form"><input type="hidden" name="csrf" value="'+escapeHtml(res.locals.csrf)+'"><label>Email<input type="email" name="email" autocomplete="email" required></label><label>Password<input type="password" name="password" autocomplete="current-password" required></label><button class="button primary full">Sign in</button></form>'+googleSignInMarkup(res.locals.csrf)+'<p class="auth-switch">New to XWADDA? <a href="/signup">Create an account</a></p></section>';
