@@ -154,6 +154,5 @@
     } catch { /* Social links are optional. */ }
   }
   loadSocials();
-  async function loadSupportContacts(){try{const response=await fetch('/api/public/support-contacts',{cache:'no-store'}),data=await response.json();if(!response.ok||!data.ok)return;const fab=$('support-fab');if(fab){if(data.contacts.support1){fab.href=data.contacts.support1;fab.target='_blank';fab.rel='noopener noreferrer';fab.setAttribute('aria-label','Contact XWADDA Support on WhatsApp');const tip=fab.querySelector('.support-tip');if(tip)tip.textContent='Contact XWADDA Support';}const dot=fab.querySelector('.active-dot');if(dot){const online=Boolean(data.bots?.whatsapp?.online);dot.classList.toggle('support-offline',!online);dot.setAttribute('aria-label',online?'WhatsApp bot online':'WhatsApp bot offline');}}const contact=$('footer-contact-support');if(contact&&data.contacts.support1){contact.href=data.contacts.support1;contact.target='_blank';contact.rel='noopener noreferrer';}}catch{}}
-  loadSupportContacts();
+
 })();
