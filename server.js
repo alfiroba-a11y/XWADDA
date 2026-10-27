@@ -99,8 +99,8 @@ const roomJoinLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standar
 const scamLookupLimiter = rateLimit({ windowMs: 60 * 1000, limit: 15, standardHeaders: 'draft-7', legacyHeaders: false });
 const publicReportLimiter = rateLimit({ windowMs: 60 * 60 * 1000, limit: 4, standardHeaders: 'draft-7', legacyHeaders: false });
 
-const FEE_BANDS=[{min:1000,max:5000,fee:400},{min:5001,max:10000,fee:550},{min:10001,max:20000,fee:700},{min:20001,max:35000,fee:850},{min:35001,max:50000,fee:1000},...Array.from({length:30},(_,i)=>({min:50001+i*15000,max:Math.min(500000,65000+i*15000),fee:1150+i*150}))];
-function feeKesFor(amountKes){const amount=Math.max(0,Number(amountKes)||0);if(amount<=1000)return 400;const band=FEE_BANDS.find(x=>amount<=x.max);if(!band)throw new Error('Deal amounts must not exceed KES 500,000 equivalent.');return band.fee;}
+const FEE_BANDS=[{min:1001,max:5000,fee:300},{min:5001,max:10000,fee:450},{min:10001,max:20000,fee:600},{min:20001,max:35000,fee:750},{min:35001,max:50000,fee:900},...Array.from({length:30},(_,i)=>({min:50001+i*15000,max:Math.min(500000,65000+i*15000),fee:1050+i*150}))];
+function feeKesFor(amountKes){const amount=Math.max(0,Number(amountKes)||0);if(amount<1001)return 0;const band=FEE_BANDS.find(x=>amount<=x.max);if(!band)throw new Error('Deal amounts must not exceed KES 500,000 equivalent.');return band.fee;}
 function feeMinor(currency,principal,kesPerUsdt=150){if(!Number.isSafeInteger(principal)||principal<1)throw new Error('Invalid amount');if(currency==='KES')return feeKesFor(principal/100)*100;if(currency==='USDT'){if(!Number.isFinite(kesPerUsdt)||kesPerUsdt<=0)throw new Error('A live USDT/KES rate is required to calculate this fee.');return Math.round((feeKesFor((principal/100)*kesPerUsdt)/kesPerUsdt)*100)}throw new Error('Unsupported currency');}
 function feeShares(deal){const fee=Number(deal.feeMinor)||0;if(deal.feePayer==='seller')return{buyer:0,seller:fee};if(deal.feePayer==='split'){const buyer=Math.ceil(fee/2);return{buyer,seller:fee-buyer}}return{buyer:fee,seller:0}}
 function buyerDueMinor(deal){return Number(deal.amountMinor||0)+feeShares(deal).buyer}
