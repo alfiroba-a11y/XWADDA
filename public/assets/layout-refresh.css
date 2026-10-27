@@ -449,3 +449,39 @@ body[data-theme] .preview-method.active{background:#315efb!important;color:#fff!
 .public-check-result dl div{padding:12px;border:1px solid var(--line,#dfe2e8);border-radius:10px}.public-check-result dt{color:var(--muted,#667085);font-size:.85rem}.public-check-result dd{margin:5px 0 0;font-weight:700}
 .trusted-contact-list{display:grid;gap:10px}.trusted-contact-row{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:14px;border:1px solid var(--line,#dfe2e8);border-radius:10px}.trusted-contact-row code{overflow-wrap:anywhere}
  @media(max-width:760px){.public-safety-tools{grid-template-columns:1fr;padding:20px}.public-tool-links{grid-template-columns:1fr}.public-tool-links a{min-height:auto}.public-check-result dl{grid-template-columns:1fr}.trusted-contact-row{grid-template-columns:1fr}}
+
+/* Final XWADDA palette and card controls */
+:root{--xw-page:#f4f4f4;--xw-surface:#fff;--xw-ink:#111;--xw-muted:#555;--xw-line:#b8b8b8;--xw-selected:#3157df}
+body[data-theme="light"]{background:var(--xw-page)!important;color:var(--xw-ink)!important;color-scheme:light}
+body[data-theme="dark"]{--xw-page:#111;--xw-surface:#1b1b1b;--xw-ink:#f5f5f5;--xw-muted:#c4c4c4;--xw-line:#515151;background:var(--xw-page)!important;color:var(--xw-ink)!important;color-scheme:dark}
+body[data-theme] .site-header,body[data-theme] .admin-stat,body[data-theme] .admin-section,body[data-theme] .admin-operation-card,body[data-theme] .admin-record,body[data-theme] .metric,body[data-theme] .deal-card,body[data-theme] .panel-light,body[data-theme] .glass-card,body[data-theme] .simple-page,body[data-theme] .auth-card{background:var(--xw-surface)!important;color:var(--xw-ink)!important;border-color:var(--xw-line)!important}
+body[data-theme] .site-header nav a,body[data-theme] .site-brand,body[data-theme] .admin-section h2,body[data-theme] .admin-section h3,body[data-theme] .admin-record b,body[data-theme] label,body[data-theme] .subhead{color:var(--xw-ink)!important}
+body[data-theme] .admin-section p,body[data-theme] .admin-note,body[data-theme] .form-note,body[data-theme] .admin-record small,body[data-theme] .admin-stat span{color:var(--xw-muted)!important}
+body[data-theme] .button.primary,body[data-theme] .button.button-primary,body[data-theme] .nav-cta{background:#fff!important;color:#111!important;border:1px solid #222!important;box-shadow:none!important}
+body[data-theme] button[aria-pressed="true"],body[data-theme] .is-selected,body[data-theme] .active[aria-pressed="true"],body[data-theme] .preview-method.active{background:var(--xw-selected)!important;color:#fff!important;border-color:var(--xw-selected)!important}
+body[data-theme] .preview-method,body[data-theme] .payment-method-card button,body[data-theme] .kiosk-direction button,body[data-theme] .role-choice-select{background:#fff!important;color:#111!important;border:1px solid #777!important}
+body[data-theme] .status-completed,body[data-theme] .status-released,body[data-theme] .status-refunded,body[data-theme] .kiosk-completed{color:#19743a!important;background:transparent!important;border-color:transparent!important}
+body[data-theme] .status-cancelled,body[data-theme] .kiosk-cancelled{color:#bd2424!important;background:transparent!important;border-color:transparent!important}
+body[data-theme="dark"] input,body[data-theme="dark"] textarea,body[data-theme="dark"] select{background:#fff!important;color:#111!important;border-color:#888!important}
+.admin-operation-card{display:block;margin:16px 0!important;background:var(--xw-surface)!important;border:1px solid var(--xw-line)!important;border-radius:12px!important;box-shadow:0 6px 20px #0000000c!important}
+.admin-operation-summary{min-height:62px!important;padding:17px 20px!important;color:var(--xw-ink)!important;background:var(--xw-surface)!important}
+.admin-operation-card[open]>.admin-operation-summary{border-bottom:1px solid var(--xw-line)}
+.admin-operation-card[open]>.admin-section-head h2{display:none}
+.admin-operation-card>.admin-section-head,.admin-operation-card>.admin-record-list,.admin-operation-card>.admin-table-wrap,.admin-operation-card>.admin-two-col,.admin-operation-card>form{margin:18px 20px 20px!important}
+.admin-nav{display:none!important}
+@media(max-width:640px){.admin-operation-card>.admin-section-head,.admin-operation-card>.admin-record-list,.admin-operation-card>.admin-table-wrap,.admin-operation-card>.admin-two-col,.admin-operation-card>form{margin:14px 12px!important}.admin-operation-summary{min-height:54px!important;padding:14px!important}}
+
+body[data-theme] .app-sidebar{background:var(--xw-surface)!important;color:var(--xw-ink)!important;border-color:var(--xw-line)!important}
+body[data-theme] .sidebar-link{color:var(--xw-ink)!important}
+body[data-theme] .sidebar-link.active{background:var(--xw-selected)!important;color:#fff!important;border-color:var(--xw-selected)!important}
+body[data-theme="light"] .sidebar-label{color:#555!important}
+body[data-theme="dark"] .sidebar-label{color:#c4c4c4!important}
+body[data-theme="dark"] h1,body[data-theme="dark"] h2,body[data-theme="dark"] h3,body[data-theme="dark"] .hero-copy h1,body[data-theme="dark"] .section-head h2{color:#f5f5f5!important}
+body[data-theme="dark"] .orbit-card,body[data-theme="dark"] .how-grid article,body[data-theme="dark"] .feature-grid article,body[data-theme="dark"] .payment-card,body[data-theme="dark"] .proof-strip,body[data-theme="dark"] .landing-callout,body[data-theme="dark"] .public-safety-tools,body[data-theme="dark"] .escrow-live-strip,body[data-theme="dark"] .faq-section details{background:var(--xw-surface)!important;color:var(--xw-ink)!important;border-color:var(--xw-line)!important}
+body[data-theme="dark"] .hero-copy>p,body[data-theme="dark"] .section-head>p,body[data-theme="dark"] .how-grid p,body[data-theme="dark"] .feature-grid p,body[data-theme="dark"] .public-safety-tools p,body[data-theme="dark"] .faq-section details p,body[data-theme="dark"] .landing-footnote{color:var(--xw-muted)!important}
+body[data-theme] .status-completed,body[data-theme] .status-released,body[data-theme] .status-refunded,body[data-theme] .kiosk-completed{border-radius:0!important;box-shadow:none!important}
+body[data-theme] .status-cancelled,body[data-theme] .kiosk-cancelled{border-radius:0!important;box-shadow:none!important}
+.admin-operation-card[open]>h2{display:none}
+.member-mpesa-maintenance{display:grid;gap:5px;margin:0 0 20px;padding:15px 18px;border:1px solid #8f1717;border-left:6px solid #8f1717;border-radius:10px;background:#c62828;color:#fff;box-shadow:0 5px 18px #8f171733}
+.member-mpesa-maintenance strong{font-size:.92rem;letter-spacing:.04em}
+.member-mpesa-maintenance span{font-size:.88rem;line-height:1.5}
