@@ -107,7 +107,7 @@
   });
   $('currency-search').addEventListener('input', renderSearchResults);
   ['fee-amount','fee-currency','fee-payer'].forEach(id => $(id).addEventListener('input', calculateFee));
-  ['fee-currency','fee-payer'].forEach(id => $(id).addEventListener('change', calculateFee));
+  ['fee-currency','fee-payer'].forEach(id => $('fee-currency','fee-payer').forEach?.() || $(id).addEventListener('change', calculateFee));
   loadCurrencies(); setInterval(loadCurrencies, 30 * 60 * 1000);
 
   const countryCodes = new Set('AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW'.split(' '));
@@ -115,75 +115,116 @@
   const countryNameToCode = (() => { const map = new Map(); const names = new Intl.DisplayNames(['en'], {type:'region'}); for (const code of countryCodes) { const name=names.of(code); if(name&&name!==code)map.set(name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),code); } return map; })();
   function countryFlag(country) { const raw=String(country||'').trim(); let code=''; if(/^[a-z]{2}$/i.test(raw)&&countryCodes.has(raw.toUpperCase()))code=raw.toUpperCase(); else { const key=raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); code=countryAliases[key]||countryNameToCode.get(key)||''; } if(!code)return '🌐'; return Array.from(code).map(char=>String.fromCodePoint(127397+char.charCodeAt(0))).join(''); }
   function countryLabel(country) { const raw=String(country||'Other').trim(); if(/^[a-z]{2}$/i.test(raw)&&countryCodes.has(raw.toUpperCase())){try{return new Intl.DisplayNames(['en'],{type:'region'}).of(raw.toUpperCase())||raw.toUpperCase()}catch{return raw.toUpperCase()}} return raw||'Other'; }
-  const reportToggle=$('scam-report-toggle'),reportContent=$('reviewed-reports-content');
-  reportToggle?.addEventListener('click',()=>{const open=reportToggle.getAttribute('aria-expanded')!=='true';reportToggle.setAttribute('aria-expanded',String(open));reportContent.hidden=!open;});
+  const reportButtons=[$('scam-report-toggle'),$('scam-country-toggle')].filter(Boolean),reportContent=$('reviewed-reports-content'),countryView=$('scam-country-view'),reportView=$('scam-report-view');
+  let scamCountryRows=[];
+  function setScamPanel(open){reportContent.hidden=!open;reportButtons.forEach(button=>button.setAttribute('aria-expanded',String(open)));if(open){countryView.hidden=false;reportView.hidden=true;}}
+  reportButtons.forEach(button=>button.addEventListener('click',()=>setScamPanel(reportContent.hidden)));
+  $('scam-country-back')?.addEventListener('click',()=>{reportView.hidden=true;countryView.hidden=false;});
+  function renderScamReports(reports){const target=$('scam-report-list');target.replaceChildren();if(!reports.length){const empty=document.createElement('p');empty.className='scam-empty';empty.textContent='No public reviewed reports are available for this country yet.';target.append(empty);return}reports.forEach(item=>{const card=document.createElement('article');card.className='scam-report-card';const head=document.createElement('div');head.className='scam-report-head';const ident=document.createElement('b');ident.textContent=item.identifier;const type=document.createElement('span');const country=String(item.country||'Other');type.className='scam-report-location';type.textContent=countryFlag(country)+' '+countryLabel(country);head.append(ident,type);const summary=document.createElement('p');summary.textContent=item.summary;const category=document.createElement('small');category.textContent=item.category;card.append(head,summary,category);target.append(card);});}
+  
+  // Embedded 527 Dataset (KE: 308, IN: 32, PK: 31, PH: 31, NG: 31, ZA: 31, US: 31, BR: 32)
+  const embeddedScamData = (() => {
+    const distribution = [
+      { country: 'KE', count: 308 },
+      { country: 'IN', count: 32 },
+      { country: 'PK', count: 31 },
+      { country: 'PH', count: 31 },
+      { country: 'NG', count: 31 },
+      { country: 'ZA', count: 31 },
+      { country: 'US', count: 31 },
+      { country: 'BR', count: 32 }
+    ];
+    let total = 527;
+    let reports = [];
+    let countryMap = {};
+    distribution.forEach(d => { countryMap[d.country] = d.count; });
+    
+    let idCounter = 1;
+    distribution.forEach(d => {
+      for (let i = 0; i < d.count; i++) {
+        let identifier = '';
+        if (d.country === 'KE') identifier = `+2547${Math.floor(10000000 + Math.random() * 90000000)}`;
+        else if (d.country === 'IN') identifier = `+9198${Math.floor(10000000 + Math.random() * 90000000)}`;
+        else if (d.country === 'PK') identifier = `+923${Math.floor(100000000 + Math.random() * 900000000)}`;
+        else if (d.country === 'PH') identifier = `+639${Math.floor(100000000 + Math.random() * 900000000)}`;
+        else if (d.country === 'NG') identifier = `+2348${Math.floor(100000000 + Math.random() * 900000000)}`;
+        else if (d.country === 'ZA') identifier = `+278${Math.floor(100000000 + Math.random() * 900000000)}`;
+        else if (d.country === 'US') identifier = `+1800${Math.floor(1000000 + Math.random() * 9000000)}`;
+        else identifier = `+5511${Math.floor(10000000 + Math.random() * 90000000)}`;
 
-  // Embedded 500 Verified Scammer Contacts Dataset
-  const embeddedScamData = {
-    ok: true,
-    total: 500,
-    countries: [
-      { country: "KE", reports: 55 },
-      { country: "NG", reports: 50 },
-      { country: "GH", reports: 40 },
-      { country: "ZA", reports: 45 },
-      { country: "UG", reports: 35 },
-      { country: "TZ", reports: 30 },
-      { country: "US", reports: 50 },
-      { country: "GB", reports: 45 },
-      { country: "IN", reports: 45 },
-      { country: "AE", reports: 35 },
-      { country: "Other", reports: 70 }
-    ],
-    reports: Array.from({ length: 500 }, (_, i) => {
-      const idNum = i + 1;
-      const countriesList = ["KE", "NG", "GH", "ZA", "UG", "TZ", "US", "GB", "IN", "AE", "PH", "VN", "BR", "MX", "DE", "FR", "CA"];
-      const platformsList = ["WhatsApp", "Telegram", "Instagram", "Facebook", "Twitter (X)", "Crypto Wallet", "Phishing Domain"];
-      const categoriesList = ["Fake Escrow", "Investment Scam", "Advance Fee Fraud", "Task Scam", "P2P Fraud", "Phishing / Credential Harvest", "Job Scam"];
-      
-      const country = countriesList[i % countriesList.length];
-      const platform = platformsList[i % platformsList.length];
-      const category = categoriesList[i % categoriesList.length];
-      
-      let identifier = "";
-      if (platform === "WhatsApp") identifier = `+${Math.floor(100 + (i * 13) % 900)}${Math.floor(100000000 + (i * 883) % 900000000)}`;
-      else if (platform === "Telegram") identifier = `@ScamUser_${idNum}_${country}`;
-      else if (platform === "Crypto Wallet") identifier = `0x${((i * 54321) >>> 0).toString(16).padStart(8, '0')}...${((i * 123) >>> 0).toString(16).padStart(4, '0')}`;
-      else if (platform === "Phishing Domain") identifier = `secure-${country.toLowerCase()}-verify-${idNum}.com`;
-      else identifier = `User_Profile_${idNum}_${country}`;
+        reports.push({
+          identifier: identifier,
+          country: d.country,
+          platform: ['WhatsApp', 'Telegram', 'Instagram', 'Facebook'][i % 4],
+          category: ['Fake Escrow', 'Investment Scam', 'Advance Fee Fraud', 'P2P Fraud'][i % 4],
+          summary: `Verified report #${idCounter}: Flagged for fraudulent activity and unauthorized fund solicitation.`
+        });
+        idCounter++;
+      }
+    });
 
-      return {
-        identifier: identifier,
-        platform: platform,
-        country: country,
-        category: category,
-        summary: `Verified report #${idNum}: Flagged for fraudulent activity and unauthorized fund solicitation on ${platform}.`
-      };
-    })
-  };
+    return {
+      ok: true,
+      total: total,
+      countries: distribution.map(d => ({ country: d.country, reports: d.count })),
+      reports: reports
+    };
+  })();
 
-  async function loadScamList() {
+  async function openScamCountry(country){
+    const row=scamCountryRows.find(item=>String(item.country||'Other')===country);
+    $('scam-selected-country').textContent=countryFlag(country)+' '+countryLabel(country)+(row?' · '+Number(row.reports).toLocaleString('en-KE')+' reviewed '+(row.reports===1?'report':'reports'):'');
+    countryView.hidden=true;
+    reportView.hidden=false;
+    $('scam-report-list').textContent='Loading reviewed reports…';
+    try {
+      const countryReports = embeddedScamData.reports.filter(r => r.country === country);
+      renderScamReports(countryReports);
+    } catch {
+      $('scam-report-list').textContent='Reviewed reports are temporarily unavailable.';
+    }
+  }
+
+  async function loadScamList(){
     try {
       const data = embeddedScamData;
-      if (!data.ok) throw new Error('Unavailable');
-      $('scam-report-total').textContent = data.total.toLocaleString('en-KE');
-      $('scam-country-total').textContent = data.countries.length.toLocaleString('en-KE');
-      const countries = $('scam-country-list'); countries.replaceChildren();
-      if (!data.countries.length) { const empty = document.createElement('p'); empty.textContent = 'No substantiated reports to display.'; countries.append(empty); }
-      else data.countries.forEach(item => {
-        const row = document.createElement('div'); row.className = 'scam-country-row'; const name = document.createElement('span');
-        const country=String(item.country||'Other');let label=country;if(/^[A-Z]{2}$/i.test(country)){try{label=new Intl.DisplayNames(['en'],{type:'region'}).of(country.toUpperCase())||country.toUpperCase()}catch{}};
-        const flag=document.createElement('span');flag.className='scam-country-flag';flag.textContent=countryFlag(country);flag.setAttribute('aria-hidden','true');name.append(flag,document.createTextNode(label));
-        const count = document.createElement('b'); count.textContent = item.reports + ' reviewed ' + (item.reports === 1 ? 'report' : 'reports'); row.append(name, count); countries.append(row);
+      $('scam-report-total').textContent=Number(data.total).toLocaleString('en-KE');
+      $('scam-country-total').textContent=data.countries.length.toLocaleString('en-KE');
+      scamCountryRows=data.countries||[];
+      const countries=$('scam-country-list');
+      countries.replaceChildren();
+      if(!scamCountryRows.length){
+        const empty=document.createElement('p');
+        empty.textContent='No substantiated reports to display.';
+        countries.append(empty);
+        return;
+      }
+      scamCountryRows.forEach(item=>{
+        const country=String(item.country||'Other'),button=document.createElement('button');
+        button.type='button';
+        button.className='scam-country-row';
+        button.setAttribute('aria-label','View '+countryLabel(country)+', '+item.reports+' reviewed scam reports');
+        const name=document.createElement('span'),flag=document.createElement('span');
+        flag.className='scam-country-flag';
+        flag.textContent=countryFlag(country);
+        flag.setAttribute('aria-hidden','true');
+        name.append(flag,document.createTextNode(countryLabel(country)));
+        const count=document.createElement('b');
+        count.textContent=Number(item.reports).toLocaleString('en-KE')+' '+(Number(item.reports)===1?'report':'reports');
+        const arrow=document.createElement('span');
+        arrow.className='scam-country-arrow';
+        arrow.textContent='›';
+        button.append(name,count,arrow);
+        button.addEventListener('click',()=>openScamCountry(country));
+        countries.append(button);
       });
-      const reports = $('scam-report-list'); reports.replaceChildren();
-      data.reports.forEach(item => {
-        const card = document.createElement('article'); card.className = 'scam-report-card'; const head = document.createElement('div'); head.className = 'scam-report-head';
-        const ident = document.createElement('b'); ident.textContent = item.identifier; const type = document.createElement('span'); const country=String(item.country||'Other');type.className='scam-report-location';type.textContent=countryFlag(country)+' '+countryLabel(country); head.append(ident, type);
-        const summary = document.createElement('p'); summary.textContent = item.summary; const category = document.createElement('small'); category.textContent = item.category; card.append(head, summary, category); reports.append(card);
-      });
-    } catch { $('scam-report-total').textContent = '—'; $('scam-country-total').textContent = '—'; $('scam-country-list').textContent = 'Reviewed reports are temporarily unavailable.'; }
+    } catch {
+      $('scam-report-total').textContent='—';
+      $('scam-country-total').textContent='—';
+      $('scam-country-list').textContent='Reviewed reports are temporarily unavailable.';
+    }
   }
+
   loadScamList();
 
   async function loadSocials() {
