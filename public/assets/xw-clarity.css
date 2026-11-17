@@ -129,3 +129,16 @@ body[data-theme="dark"] .landing-tools-card,body[data-theme="dark"] .landing-too
 @keyframes room-toast-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:620px){.live-notification-tools{top:74px;right:12px}.live-notification-panel,.live-toast-stack{width:min(330px,calc(100vw - 24px))}}
 .live-bell svg{width:21px;height:21px}
+
+/* Admin operation cards clearly separate escrow deals from kiosk orders. */
+.admin-deal-kind,.admin-kiosk-kind{display:inline-flex;align-items:center;width:max-content;max-width:100%;padding:4px 8px;border:1px solid var(--xw-line);border-radius:999px;background:var(--xw-surface);color:var(--xw-ink);font-size:11px;font-weight:800;letter-spacing:.045em;line-height:1.25}
+.admin-kiosk-kind{border-color:#3973d6;color:#2057ad}
+.admin-deal-record .admin-record-heading>div,.admin-kiosk-record .admin-record-heading>div{display:grid;justify-items:start;gap:6px}
+.admin-deal-record .admin-record-meta span,.admin-kiosk-record .admin-record-meta span{line-height:1.45}
+.admin-deal-record .admin-record-meta span>b,.admin-kiosk-record .admin-record-meta span>b{display:block;margin-bottom:2px;color:var(--xw-ink)}
+.admin-deal-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.admin-deal-actions form{margin:0}
+.admin-deal-actions button:disabled{opacity:.65;cursor:not-allowed}
+.admin-deal-actions .admin-cancel-action{border-color:#b27528!important;color:#8a571d!important}
+.admin-deal-actions .admin-delete-action{border-color:#c94141!important;color:#ad2020!important}
+body[data-theme="dark"] .admin-kiosk-kind{border-color:#79a9ff;color:#d8e6ff}
